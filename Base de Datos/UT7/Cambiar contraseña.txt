@@ -1,0 +1,5 @@
+CMD.
+c>sqlplus "/as sysdba"
+SQL>passwd SYSTEM
+Desde Developer identificador como System
+ALATER USER SYSTEM identified by <contraseña nueva>;

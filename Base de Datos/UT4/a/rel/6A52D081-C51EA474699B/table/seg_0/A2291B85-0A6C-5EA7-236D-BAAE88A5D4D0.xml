@@ -1,0 +1,137 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A2291B85-0A6C-5EA7-236D-BAAE88A5D4D0" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="JUEGOS">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>JUEGOS</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="COD_JUEGO" id="52A97EA1-5A93-B98C-660C-53EBCB2EC62A">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUEGOS</sourceObjSchema>
+<sourceObjName>COD_JUEGO</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE" id="D022B3E2-404E-2DFE-54F3-DA63BFD5FCEC">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUEGOS</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRECIO" id="A7278240-EDBE-962B-45CD-3232EEEA9A70">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUEGOS</sourceObjSchema>
+<sourceObjName>PRECIO</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,5,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TIPO" id="B42AE46C-22EB-A10E-2EA6-6E96C8FBC486">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUEGOS</sourceObjSchema>
+<sourceObjName>TIPO</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<constraintName>TIPO_CK</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<listOfValues>
+<valueDef value="&apos;Multijugador&apos;" description=""/>
+<valueDef value="&apos;Un jugador&apos;" description=""/>
+</listOfValues>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DURACION" id="2DDC2C36-7DA3-8F9E-53A1-9E05FE8411D3">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUEGOS</sourceObjSchema>
+<sourceObjName>DURACION</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,4,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="COMPAÑIA_SERVIDOR" id="167184DE-4F04-D204-AD97-496127CB9360">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUEGOS</sourceObjSchema>
+<sourceObjName>COMPAÑIA_SERVIDOR</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="860C80CD-4167-F459-B8EF-7959B9C66D82" name="COD_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>COD_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="52A97EA1-5A93-B98C-660C-53EBCB2EC62A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D34BE2CF-F9E9-8B9B-32E9-2D172322C07C" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="COD_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>COD_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="52A97EA1-5A93-B98C-660C-53EBCB2EC62A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

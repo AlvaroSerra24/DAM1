@@ -1,0 +1,37 @@
+#contador {
+    font-size: 100px;
+    margin-bottom: 10px;
+    
+}
+#contador.green {
+    color: green;
+}
+#contador.red {
+    color: red;
+}
+div{
+    text-align: center;
+}
+#restar{
+    font-size: 18px;
+    padding: 10px 20px;
+    border: 2px solid red;
+    border-radius: 8px;
+    background-color: red;
+    color: white;
+}
+#reset{
+    font-size: 18px;
+    padding: 10px 20px;
+    border: 2px solid gray;
+    border-radius: 8px;
+    background-color: gray;
+}
+#sumar{
+    font-size: 18px;
+    padding: 10px 20px;
+    border: 2px solid green;
+    border-radius: 8px;
+    background-color: green;
+    color: white;
+}

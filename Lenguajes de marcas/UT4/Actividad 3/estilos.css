@@ -1,0 +1,74 @@
+header{ /*En el header se especifica la fuente, el color de la letra, que todas letras esten en mayusculas y la imagen de fondo, tambien se ñaden las etiquetas de flex para poder posicionar el texto donde nosotros queremos*/
+    font-family: Arial;
+    color: #7F7F81;
+    font-variant: small-caps;
+    display: flex;
+    flex-direction: row;
+    background-image: url(images/img02.jpg);
+    justify-content: center;
+    justify-content: space-evenly;
+}
+nav{/*En el nav se especifica la fuente, el color de la letra, que todas letras esten en mayusculas y la imagen de fondo, tambien se ñaden las etiquetas de flex para poder posicionar el texto donde nosotros queremos, ademas añadimos cierto espacio tando a la derecha como a la izquierda*/
+    background-image: url(images/img01.jpg);
+    font-family: Arial;
+    color: black;
+    display: flex;
+    font-variant: small-caps;
+    justify-content: space-between;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+footer{/*En el footer se especifica la fuente, el color de la letra y la imagen de fondo, tambien se ñaden las etiquetas de flex para poder posicionar el texto donde nosotros queremos*/
+    background-color: #1F1F1F;
+    display: flex;
+    font-family: Arial;
+    color: #7F7F81;
+    justify-content: space-evenly;
+}
+.Titulo{/*Para los titulos de el centro de la pagina se especifica el color de la letra, que todas letras esten en mayusculas y la imagen de fondo, tambien se ñaden las etiquetas de flex para poder posicionar el texto donde nosotros queremos*/
+    font-variant: small-caps;
+    display: flex;
+    justify-content: flex-start;
+    background-image: url(images/img03.jpg);
+}
+.columI{/*Para la columna de la izquierda se especifica su posicon flex y se le da una margen derecho al contenido de la columna y espacio a la izquierda, ademas de poner el texto en justificado*/
+    text-align: justify;
+    flex-direction: column;
+    margin-right: 5%;
+    padding-left: 10%;
+}
+.columD{/*Para la columna de la derecha se especifica su posicon flex y se le da una margen derecho al contenido de la columna y espacio a la izquierda, ademas de poner el texto en justificado*/
+    flex-direction: column;
+    text-align: justify;
+    padding-right: 10%;
+}
+div{/*En el div se especifica la fuente, el color de la letra y se activa el flex en el div, ademas de poner la imagen selecionada de fondo*/
+    font-family: Arial;
+    color: #7F7F81;
+    display: flex;
+    background-image: url(images/img01.jpg);
+}
+.pie {/*Ne la clase pie se le pone la cursiva y pedimos que el texto se mueva a la derecha, ademas de añadirle unos bordes tanto arriba como abajo de la letra*/
+    font-style: italic;
+    text-align: right;
+    border-top: 1px solid #7F7F81 ;
+    border-bottom: 1px solid #7F7F81;
+}
+span{/*En las etiquetas span se pondra el color de la letra de rojo*/
+    color: red;
+}
+a{/*En las etiquetas a, se pondra la fuente selecionada con su color, ademas de eliminar todo tipo de decoracion por la etiqueta y se le añade un borde debajo de el*/
+    font-family: Arial;
+    color: #7F7F81;
+    text-decoration: none;
+    font-style: normal;
+    border-bottom: 1px solid #7F7F81;
+}
+.T{/*En las clases T se le añadira un borde debajo y todas las palabras en mayusculas*/
+    font-variant: small-caps;
+    border-bottom: 1px solid #7F7F81;
+}
+article{/*Para poder poner todas las etiquetas article en columnas*/
+    flex-direction: column;
+}
+

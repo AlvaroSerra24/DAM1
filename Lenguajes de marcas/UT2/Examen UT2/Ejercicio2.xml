@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<consolas> <!--Los errores que podiamos encontrar eran que no estaban todas las categorias en una-->
+    <Nintendo> <!--Habia  mas texto del necesario-->
+        <nombre>Nintendo Switch</nombre>
+        <precio>285$</precio> <!--No tenia etiqueta cierre-->
+    </Nintendo>
+    <Sony>
+        <nombre>PS5</nombre>
+        <precio>510$</precio>
+    </Sony>
+    <Microsoft>
+        <nombre>Xbox Series X</nombre>
+        <precio>475$</precio>
+        <alternativa>Xbox Series S</alternativa>
+    </Microsoft>
+</consolas>

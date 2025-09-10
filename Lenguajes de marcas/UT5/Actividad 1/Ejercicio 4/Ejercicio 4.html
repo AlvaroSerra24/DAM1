@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma</title>
+</head>
+<body>
+    <script>
+        let cadena= parseInt(0);
+        let falso;
+        let palabra;
+        do{
+           if(falso=confirm("¿Quieres escribir?")){
+            if(palabra = parseInt(prompt("Escribe un numero"))){
+                cadena=cadena+palabra;
+            }else{
+                alert("No es un numero");
+            }
+           }else
+           alert(cadena);
+        }while(falso != false);
+    </script>
+</body>
+</html>

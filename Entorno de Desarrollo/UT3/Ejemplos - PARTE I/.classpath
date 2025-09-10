@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Ejemplo 1. Pruebas de cubrimiento - CAJA BLANCA/ItsFreaky/src"/>
+	<classpathentry kind="src" path="Ejemplo 1. Pruebas de cubrimiento - CAJA BLANCA/Solucion/ItsFreaky/src"/>
+	<classpathentry kind="src" path="Ejemplo2. Prueba de bucles - CAJA BLANCA/BuclesAnidados/src"/>
+	<classpathentry kind="src" path="Ejemplo2. Prueba de bucles - CAJA BLANCA/BucleSimple/src"/>
+	<classpathentry kind="src" path="Ejemplo3. Prueba de equivalencia - CAJA NEGRA/InterfazUsuarioTester/src"/>
+	<classpathentry kind="src" path="Ejemplo4. Prueba valores limite - CAJA NEGRA/InterfazTransferenciaTester/src"/>
+	<classpathentry kind="src" path="Ejemplo5. Usabilidad - CAJA NEGRA/UsabilidadApp/src"/>
+	<classpathentry kind="output" path="Ejemplo 1. Pruebas de cubrimiento - CAJA BLANCA/ItsFreaky/build/classes"/>
+</classpath>

@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="a" id="66BD1842-6D80-D8D9-7655-629C4B313239" version="3.5">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:50:02 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>66BD1842-6D80-D8D9-7655-629C4B313239</designId>
+</OSDM_Design>

@@ -1,0 +1,118 @@
+*{/*Primero le damos unas pequeñas indicaciones para toda la pagina en el caso de la fuente para el texto, su tamaño y quitar toda la decoracion de las diversas etiquetas que hemos puesto*/
+    font-family: sans-serif;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+header{/*Ponemos como display flex para poder poner el menu en fila y que empiece por la derecha, ademas creamos que el texto en este sitio sea con bordes, y de color azul, ademas se añade una linea abajo de color azul*/
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-weight: bolder;
+    color: blue;
+    border-bottom: solid 2px blue;
+}
+article{
+    display: flex;
+}
+.iz{
+    text-align: center;
+    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 275px);
+    grid-template-rows: repeat(4, auto);
+    gap: 5px;
+    color: white;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.de{
+    flex-direction: column;
+    color: #8c96a0;
+    margin-top: 10px;
+}
+footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #8c96a0;
+    border-top: solid 2px orange;
+
+}
+.B1{
+    background-color: orange;
+    grid-row: 1/3;
+    padding-top: 80px;
+    padding-left: 3px;
+    text-align: left;
+    color: white;
+    font-weight: bolder;
+}
+.B2{
+    padding-top: 30px;
+    background-color: black;
+}
+.B3{
+    padding-top: 20px;
+    background-color: orange;
+}
+.B4{
+    padding-top: 20px;
+    background-color: blue;
+    grid-column: 2/4;
+}
+.B5{
+    padding-top: 20px;
+    background-color: #8c96a0;
+    grid-column: 1/4;
+}
+.B6{
+    padding-top: 20px;
+    background-color: black;
+    grid-column: 1/4;
+}
+.barra{
+    margin-bottom: 50px;
+}
+.foto{
+    display: block;
+    width: 400px;
+}
+.buscador{
+    text-decoration: none;
+    border-bottom: solid 10px blue;
+}
+.botom{
+    background-color: blue;
+    color: white;
+}
+.t{
+    margin-bottom: 0px;
+}
+header p{
+    margin-bottom: 40px;
+}
+.e :visited{
+    color: blue;
+}
+.e :hover{
+    color: orange;
+}
+.e{
+    margin-right: 70px;
+}
+@media screen and (max-width: 1000px) {
+    .de{
+        display: none;
+    }
+}
+:visited{
+    color: white;
+}
+.B1 :hover{
+    color: blue;
+}
+.foto :hover{
+    box-shadow: black;
+}

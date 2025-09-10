@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="CUENTAS" directorySegmentName="seg_0" id="E37EF578-A29E-DCD6-D746-D77393EA6EA8">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<schemaObject>345738DD-F56D-FFE6-3BB7-56445BEC2198</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>FB9FAAFE-41A8-DBF6-2624-18423A50C0A6</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="NICK" id="01E87FC2-210F-CFFE-D735-66C63FB55F14">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DNI_JUG" id="8F302FA2-50EA-8BE6-9E06-814A6C9048C5">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="FECHA_CREACION" id="DB5D7993-21FD-93D6-2551-42C4712E34D2">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="NICK_PK" id="03F4A17D-3FCA-6060-2DC4-EF0F22518443">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<schemaObject>345738DD-F56D-FFE6-3BB7-56445BEC2198</schemaObject>
+<segment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="DNI_JUG_FK" id="89285764-9126-8991-CA82-A34F77A3262E">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="NICK_PK" id="5EE90309-E7CD-5525-F905-142E60074273">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<segment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+<existingIndex>03F4A17D-3FCA-6060-2DC4-EF0F22518443</existingIndex>
+<indexSegment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

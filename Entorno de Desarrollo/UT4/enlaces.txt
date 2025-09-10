@@ -1,0 +1,7 @@
+https://hackernoon.com/es/top-10-sistemas-de-control-de-versiones-4d314cf7adea
+https://www.siteground.es/kb/estructura-git-contenido-repositorio/
+https://aulab.es/articulos-guias-avanzadas/70/el-comando-git-add-en-git#:~:text=El%20comando%20git%20add%20a%C3%B1ade,un%20archivo%20al%20staging%20area
+https://www.atlassian.com/es/git/tutorials/saving-changes/git-commit
+https://www.atlassian.com/es/git/tutorials/syncing/git-push
+https://www.atlassian.com/es/git/tutorials/syncing/git-pull
+https://aulab.es/articulos-guias-avanzadas/75/el-comando-git-status-en-git

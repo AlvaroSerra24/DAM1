@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<agenda>
+    <!--vamos a crear un contacto-->
+    <!--Las lineas de codigo funcionan perfectamente-->
+    <contacto>
+        <nombre>Alumno</nombre>
+        <ciudad cp="15500">Ciudad Real</ciudad>
+        <telefono n="612345678"/>
+        <email>alumno@gmail.com</email>
+        <casado v="no"/>
+    </contacto>
+</agenda>

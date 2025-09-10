@@ -1,0 +1,127 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AA785452-5B4C-9CB1-EED4-8D4230B0ECDD" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="JUGADORES">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>JUGADORES</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:53:08 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="DNI" id="9F1DB69B-9FF5-E05C-58CE-491B79F83199">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUGADORES</sourceObjSchema>
+<sourceObjName>DNI</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:53:08 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>9 BYTE</dataTypeSize>
+<ownDataTypeParameters>9 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE" id="D79BF5FC-F6D2-AA2D-8CE9-AE878230A753">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUGADORES</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:53:08 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EDAD" id="51FCA78A-069F-B11A-0F8A-9D49374D069F">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUGADORES</sourceObjSchema>
+<sourceObjName>EDAD</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:53:08 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,2,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CORREO" id="E1AB012D-74FE-CDC6-8E6C-F9F0E821FF4F">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>JUGADORES</sourceObjSchema>
+<sourceObjName>CORREO</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:53:08 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="CBA725EF-CFCA-51CC-F499-2C420C01D444" name="DNI_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>DNI_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:53:08 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9F1DB69B-9FF5-E05C-58CE-491B79F83199"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C2E30ADC-EEC3-CF51-D0F4-17318ED6D46D" name="CORREO_UK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>CORREO_UK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:53:08 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E1AB012D-74FE-CDC6-8E6C-F9F0E821FF4F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FE2DC42F-65DA-3B6E-3600-CC24A0267103" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="CORREO_UK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>CORREO_UK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:53:08 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E1AB012D-74FE-CDC6-8E6C-F9F0E821FF4F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1012DE00-6A3F-740A-E2DB-A649CE7AAFA4" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="DNI_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>DNI_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:53:08 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9F1DB69B-9FF5-E05C-58CE-491B79F83199"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

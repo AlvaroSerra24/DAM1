@@ -1,0 +1,20 @@
+	public ArrayList cargarCoches(String fichero) throws FileNotFoundException{
+		Scanner entrada=new Scanner(new File(fichero));
+		ArrayList<Coche>coches=new ArrayList<Coche>();
+		String linea[];
+		String cadena;
+		entrada.nextLine();
+		while(entrada.hasNext()) {
+			cadena=entrada.nextLine();
+			linea=cadena.split(";");
+			coches.add(new Coche(linea[0], linea[1], linea[2], linea[3], Integer.parseInt(linea[4]), Double.parseDouble(linea[5])));
+		}
+		
+		
+		
+		return coches;
+		
+	}
+
+
+

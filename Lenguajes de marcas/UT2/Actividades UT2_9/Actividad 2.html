@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 2</title>
+</head>
+<body>
+    <h1>Información sobre el producto</h1>
+    <form action="">
+        <fieldset action="" method="get" enctype="multipart/form-data">
+            <legend>Datos básicos</legend>
+            <label for="nombre">Nombre</label><br>
+            <input type="text" name="nombre" value="" required="">
+            <br>
+            <br>
+            <label for="descripción">Descripción</label><br>
+            <textarea name="Descripción" id="descripción" cols="40" rows="5"></textarea><br>
+            <br>
+            <label for="foto">Foto</label>
+            <input type="file" name="archivo"> <br>
+            <br>
+            <input type="checkbox" name="contador" value=""> <label for="contador">Añadir contador de visitas</label>
+        </fieldset>
+        <fieldset>
+            <legend>Datos económicos</legend>
+            <label for="precio">Precio</label>
+            <input type="text" name="precio" size="5">
+            <label for="precio">€</label> &nbsp; &nbsp;
+            <label for="impuestos">Impuestos</label>
+            <select name="selectimpuesto" id="impuesto">
+                <option value="4%" selected="selected">4%</option>
+                <option value="7%">7%</option>
+                <option value="16%">16%</option>
+                <option value="25%">25%</option>
+            </select><br>
+            <br>
+            <label for="promoción">Promoción</label> <br>
+            <input type="radio" name="promoción" value="ninguno" checked="checked">
+            <label for="promoción">Ninguno</label>
+            <br>
+            <input type="radio" name="promoción"
+            value="transporte">
+            <label for="promoción">Transporte gratuito</label>
+            <br>
+            <input type="radio" name="promoción"
+            value="descuento">
+            <label for="promoción">Descuento %5</label>
+        </fieldset>
+        <fieldset>
+            <legend>Botones</legend>
+            <input type="button" name="guardar" value="Guardar Cambios"> 
+        <input type="reset" name="rstLimpiar" value="Borrar los datos introducidos" >
+        </fieldset>
+    </form>
+</body>
+</html>

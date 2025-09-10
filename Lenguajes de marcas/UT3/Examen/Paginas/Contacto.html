@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto</title>
+    <link rel="stylesheet" type="text/css" href="../Recursos/estilos.css"/>
+</head>
+<body>
+    <header>
+        <h1>Super Smash Bros Ultimate</h1>
+    </header>
+    <div>
+        <form action="" method="post">
+            <fieldset>
+                <legend>Introduce tus datos personal</legend>
+                <br>
+                <label for="nombre">Nombre (*)</label>
+                <br>
+                <input type="text" name="nombre" value="" required maxlength="5">
+                <br>
+                <label for="apellidos">Apellidos</label>
+                <br>
+                <input type="text" name="apellidos" value="" maxlength="15">
+                <br>
+                <label for="DNI">DNI (*)</label>
+                <br>
+                <input type="text" name="DNI" value="" required maxlength="9">
+                <br>
+                <label for="correo">Correo (*)</label>
+                <br>
+                <input type="email" name="correo" value="" required>
+                <br>
+                <label for="genero">Género</label>
+                <br>
+                <input type="radio" name="genero" value="hombre" >Hombre
+                <br>
+                <input type="radio" name="genero" value="mujer">Mujer
+                <br>
+                <input type="radio" name="genero" value="otro">Otro
+                <br>
+                <label for="fecha">Fecha de nacimiento</label>
+                <input type="date" name="fecha">
+            </fieldset>
+            <fieldset>
+                <legend>Información complementaria</legend>
+                <label for="mensaje">Mensaje (*)</label>
+                <br>
+                <textarea name="" id="" cols="50" rows="6" required></textarea>
+                <br>
+                <input type="checkbox" name="marca" value="marca"><label for="marca">Marca esta casilla si te pones en contacto en nombre de tu empresa</label>
+                <br>
+                <label for="enlace">Enlace a tu página web</label>
+                <br>
+                <input type="url" name="enlace" id="enlace" value="">
+                <br>
+                <label for="mandame">Mándame una foto de tu mascota</label>
+                <br>
+                <input type="file" name="mandame" id="mandame" value="Seleccionar archivo">
+            </fieldset>
+            <input type="button" value="Enviar" src="Enviado.html"> &nbsp; <input type="reset" value="Borrar formulario">
+        </form>
+        <br>
+        <a href="../index.html">Volver al índice</a>
+    </div>
+    <footer>
+        <p class="nombre"><strong>Autor de la web: Álvaro Serradilla Otero</strong></p>
+        <p>1º DAM &copy</p>
+    </footer>
+</body>
+</html>

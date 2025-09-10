@@ -1,0 +1,219 @@
+
+SET SERVEROUTPUT ON;
+
+/* EJERCICIO 1 [3 PUNTOS]: Realiza las siguientes consultas sobre el modelo de datos facilitado:
+a)	Mostrar el nombre y apellidos, el origen y el destino del vuelo reservado, así como el precio y la fecha de la reserva,
+de aquellos vuelos que se vayan a realizar en los próximos dos días. */
+
+SELECT P.NOM_PASAJERO || ' ' || P.APE_PASAJERO "NOMBRE COMPLETO", 
+V.ORIGEN_VUELO, V.DESTINO_VUELO, R.PRECIO, V.FECHA_VUELO
+FROM PASAJEROS P JOIN RESERVAS R ON (P.COD_PASAJERO = R.COD_PASAJERO) 
+                JOIN VUELOS V ON(R.COD_VUELO = V.COD_VUELO)
+WHERE V.FECHA_VUELO BETWEEN SYSDATE AND SYSDATE+2
+ORDER BY V.FECHA_VUELO;
+    
+/*
+b)	Misma consulta que la anterior pero mostrando vuelos que se van a a realizar en los próximos dos días y que su precio sea mayor 
+que la media de precios de todos los vuelos.
+*/
+SELECT P.NOM_PASAJERO || ' ' || P.APE_PASAJERO "NOMBRE COMPLETO", 
+V.ORIGEN_VUELO, V.DESTINO_VUELO, R.PRECIO, V.FECHA_VUELO
+FROM PASAJEROS P JOIN RESERVAS R ON (P.COD_PASAJERO = R.COD_PASAJERO) 
+                JOIN VUELOS V ON(R.COD_VUELO = V.COD_VUELO)
+WHERE V.FECHA_VUELO BETWEEN SYSDATE AND SYSDATE+2
+    AND R.PRECIO > (SELECT AVG(PRECIO) FROM RESERVAS); 
+    
+/*
+c)	Mostrar el nombre, apellidos (en un solo campo) y dirección y el nombre de la línea aérea, de los pasajeros que hayan volado 
+alguna vez con IBERIA. El resultado aparecerá ordena alfabéticamente por nombre y apellidos. */
+
+SELECT    DISTINCT (P.NOM_PASAJERO || ' ' || P.APE_PASAJERO) NOMBRE, P.DIR_PASAJERO
+FROM PASAJEROS P JOIN RESERVAS R ON (P.COD_PASAJERO = R.COD_PASAJERO) 
+                JOIN VUELOS V ON(R.COD_VUELO = V.COD_VUELO)
+                JOIN AVIONES A ON(V.COD_AVION = A.COD_AVION)
+                JOIN LINEAS_AEREAS L ON(A.COD_LINEA = L.COD_LINEA)
+WHERE L.NOM_LINEA LIKE 'IBERIA'
+ORDER BY NOMBRE;
+
+/*d.	Mostrar el nombre y apellidos, el codigo de la reserva, origen y destino del vuelo  del o de los pasajeros que ha realizadon
+la reserva que de mayor precio. */
+SELECT    DISTINCT (NOM_PASAJERO || ' ' || APE_PASAJERO) NOMBRE, 
+          COD_VUELO, ORIGEN_VUELO, DESTINO_VUELO
+FROM PASAJEROS JOIN RESERVAS 
+     USING (COD_PASAJERO) JOIN VUELOS USING(COD_VUELO)
+WHERE PRECIO = (SELECT MAX(PRECIO) FROM RESERVAS)
+ORDER BY NOMBRE;
+
+/* e)	Agrupamiento. Realiza listado que fecha, el destino del vuelo, así como el número de pasajeros 
+que viajarán con el tripulante Mauro Gómez Gómez. Ordenar por fecha. [0,5 puntos]  */
+      
+SELECT  V.FECHA_VUELO "FECHA" , V.DESTINO_VUELO "DESTINO", COUNT (*) "NUM PASAJEROS"
+FROM PASAJEROS P JOIN RESERVAS R ON (P.COD_PASAJERO = R.COD_PASAJERO) 
+                JOIN VUELOS V ON(R.COD_VUELO = V.COD_VUELO) 
+                join TRIPULANTES_VUELO TV ON (TV.COD_VUELO=V.COD_VUELO) 
+                JOIN TRIPULANTES TT ON TV.COD_TRIPULANTE = TT.COD_TRIPULANTE AND 
+                TT.NOM_TRIPULANTE LIKE 'MAURO' AND TT.APE_TRIPULANTE LIKE 'GÓMEZ GÓMEZ'
+GROUP BY V.FECHA_VUELO, V.DESTINO_VUELO
+ORDER BY V.FECHA_VUELO ASC;
+
+/* EJERCICIO 2:
+4.	La agencia ‘PANORAMAS’ ha decidido hacer un 40% de descuento en todos los vuelos cuyo origen es ‘MADRID’. 
+Modifica el precio de la tabla reserva teniendo en cuenta las condiciones especificadas. 
+*/
+UPDATE RESERVAS SET PRECIO = PRECIO*0.6
+WHERE COD_AGENCIA IN (SELECT COD_AGENCIA 
+                      FROM AGENCIAS 
+                      WHERE UPPER(NOM_AGENCIA) LIKE 'PANORAMAS') 
+                  AND 
+      COD_VUELO IN (SELECT COD_VUELO FROM VUELOS WHERE ORIGEN_VUELO LIKE 'MADRID');
+
+
+/* b)	Crea la tabla HISTORICO_VUELOS, que se rellenará mediante un INSERT con SELECT, con los siguientes campos (mismos tipos de datos que sus análogos): 
+a.	COD_VUELO
+b.	ORIGEN-DESTINO (cadena concatenada de origen-destino, “Londres-kiev”. 
+c.	FECHA-HORA (cadena que concatena fecha y hora: “dd-mm-yyyy hh:mm”
+d.	COD_AVION
+e.	NOMBRE_AVION
+
+Las tablas que se usarán serán VUELOS y AVIONES. 
+*/
+
+DROP TABLE HIST_VUELOS; -- en caso necesario. 
+CREATE TABLE HIST_VUELOS1 (
+    COD_VUELO       NUMBER(5) NOT NULL,
+    ORIGEN_DESTINO    VARCHAR2(60 BYTE) NOT NULL,
+    FECHA_HORA      VARCHAR2(20) NOT NULL,
+    COD_AVION       NUMBER(5) NOT NULL,
+    NOM_AVION    VARCHAR2(40)
+);
+
+-- select a usar: se comprueba para saber si devuelve los valores que quiero. 
+SELECT V.COD_VUELO, 
+          (V.ORIGEN_VUELO||'-'||V.DESTINO_VUELO),
+          (V.FECHA_VUELO||' '||V.HORA_VUELO),
+          V.COD_AVION, 
+          A.NOM_AVION
+          FROM VUELOS V JOIN AVIONES A
+          ON V.COD_AVION = A.COD_AVION;
+
+INSERT INTO HIST_VUELOS (
+   SELECT V.COD_VUELO, 
+          (V.ORIGEN_VUELO||'-'||V.DESTINO_VUELO),
+          (V.FECHA_VUELO||' '||V.HORA_VUELO),
+          V.COD_AVION, 
+          A.NOM_AVION
+          FROM VUELOS V JOIN AVIONES A
+          ON V.COD_AVION = A.COD_AVION);
+          
+
+/* EJERCICIO 3: PROCEDURE CON CURSORES: se proporciona un script mínimo. Se pueden incorporar comprobaciones como por ejemplo
+   si vuelo tiene reservas y por tanto, habrá o no pasajeros, etc. Los que el programador crea necesarios. */
+
+ CREATE OR REPLACE PROCEDURE AVIONES_VUELOS_PASAJERO (AVION NUMBER) IS
+   
+    CURSOR CVUELOS IS SELECT * FROM VUELOS WHERE COD_AVION=AVION;
+    CURSOR CPASAJEROS  (VUELO NUMBER) IS SELECT P.* 
+                        FROM RESERVAS R JOIN PASAJEROS P ON(R.COD_PASAJERO = P.COD_PASAJERO)
+                        WHERE R.COD_VUELO = VUELO;
+
+    REGVUELO        CVUELOS%ROWTYPE;
+    REGPASAJERO     CPASAJEROS%ROWTYPE;
+
+    CONT_PASAJEROS_VUELO NUMBER:=0;
+    CONT_PASAJEROS_AVION NUMBER:=0;
+
+    NOMBRE_AVION VARCHAR2(30);
+BEGIN
+    SELECT NOM_AVION INTO NOMBRE_AVION FROM AVIONES WHERE COD_AVION = AVION;
+    OPEN CVUELOS;
+    FETCH CVUELOS INTO REGVUELO;
+    DBMS_OUTPUT.PUT_LINE('NOMBRE DEL AVION:  ' || NOMBRE_AVION );
+    DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------------------');
+    WHILE(CVUELOS %FOUND) LOOP
+        DBMS_OUTPUT.PUT_LINE(RPAD(REGVUELO.ORIGEN_VUELO, 15)||RPAD(REGVUELO.DESTINO_VUELO, 15)|| RPAD(REGVUELO.FECHA_VUELO, 20));        
+        DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------------------');
+        OPEN CPASAJEROS(REGVUELO.COD_VUELO);
+        FETCH CPASAJEROS INTO REGPASAJERO;
+        DBMS_OUTPUT.PUT_LINE(RPAD('NOMBRE', 15)|| RPAD('APELLIDOS', 15)|| RPAD('DIRECCIÓN', 35)|| RPAD('TELÉFONO', 20));
+        DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------------------');
+        WHILE(CPASAJEROS %FOUND) LOOP
+            DBMS_OUTPUT.PUT_LINE(RPAD(REGPASAJERO.NOM_PASAJERO, 15)||RPAD(REGPASAJERO.APE_PASAJERO, 15)|| RPAD(REGPASAJERO.DIR_PASAJERO, 35)|| RPAD(REGPASAJERO.TEL_PASAJERO, 20));   
+            CONT_PASAJEROS_VUELO  := CONT_PASAJEROS_VUELO  + 1;
+            FETCH CPASAJEROS INTO REGPASAJERO;
+        END LOOP;
+        CLOSE CPASAJEROS;
+        DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------------------');
+        DBMS_OUTPUT.PUT_LINE('                                              NÚMERO VUELOS AVIÓN: ' ||  CONT_PASAJEROS_VUELO  );
+        DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------------------');
+        CONT_PASAJEROS_AVION := + CONT_PASAJEROS_AVION + CONT_PASAJEROS_VUELO;
+        CONT_PASAJEROS_VUELO := 0;
+        FETCH CVUELOS INTO REGVUELO;
+    END LOOP;
+        DBMS_OUTPUT.PUT_LINE('NÚMERO TOTAL DE VUELOS LÍNEA AÉREA: ' ||  CONT_PASAJEROS_AVION  );
+        DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------------------');
+    CLOSE CVUELOS;   
+END;
+
+/* CÓDIGO DE PRUEBA PROCEDURE GENERADO */
+DECLARE
+BEGIN
+   
+    AVIONES_VUELOS_PASAJERO(5);
+END;
+
+/* EJERCICIO 4: Realizar un trigger para controlar las operaciones de inserción, modificación y borrado en la tabla de pasajeros. 
+?	Si se realiza una operación de inserción se grabará en AUDITA_PASAJEROS la siguiente cadena: 
+     “INSERCIÓN [dd-mm-yy hh:mm]: cod_pasajero apellido_pasajero, nombre_pasajero”
+?	Si se realiza una operación de modificación sobre los campos nombre, apellidos o dirección, se grabará en AUDITA_PASAJEROS la siguiente cadena:
+     “MODIFICACIÓN [dd-mm-yy hh:mm]: cod_pasajero apellido_pasajero_ANTIGUO, nombre_pasajero_ANTIGUO cambia a apellido_pasajero_NUEVO, nombre_pasajero_NUEVO”
+?	Si se realiza una operación de borrado se grabará en AUDITA_PASAJEROS la siguiente cadena:
+“BORRADO [dd-mm-yy hh:mm]: cod_pasajero “
+La tabla AUDITA_PASAJEROS, no existe, debes crearla con un campo que tenga suficiente tamaño, para almacenar los datos que se pidE */
+
+DROP TABLE AUDITA_PASAJEROS CASCADE CONSTRAINTS;
+CREATE TABLE AUDITA_PASAJEROS(
+    OPERACION VARCHAR2(200) 
+);
+
+CREATE OR REPLACE TRIGGER AUDITA_PASAJERO BEFORE INSERT OR UPDATE OR DELETE ON PASAJEROS FOR EACH ROW
+DECLARE
+   MENSAJE VARCHAR2(400):= '';
+BEGIN
+    MENSAJE :='FECHA: '||SYSDATE||', HORA:'||TO_CHAR(SYSDATE,'HH:MM:SS');
+
+    IF INSERTING THEN
+        MENSAJE := MENSAJE || ', OPERACION: INSERCIÓN ' || ', NOMBRE: ' ||:NEW.NOM_PASAJERO || ' ' ||:NEW.APE_PASAJERO
+                           || ', DIRECCIÓN: ' || :NEW.DIR_PASAJERO ;
+    END IF;    
+
+    IF DELETING THEN
+        MENSAJE := MENSAJE || ', OPERACION: BORRADO ' || ', NOMBRE: ' ||:OLD.NOM_PASAJERO || ' ' ||:OLD.APE_PASAJERO
+                           || ', DIRECCIÓN: ' || :OLD.DIR_PASAJERO ;
+    END IF;
+    
+    IF UPDATING THEN -- SE PUEDE HACER SIN ESTA INSTRUCCIÓN
+        MENSAJE := MENSAJE || ', OPERACION: MODIFICACIÓN ';
+        
+        IF UPDATING('NOM_PASAJERO') THEN
+          MENSAJE := MENSAJE ||', NOMBRE ANTERIOR: '||:OLD.NOM_PASAJERO || ', NOMBRE NUEVO: '||:NEW.NOM_PASAJERO ||'. ';
+        END IF;
+        
+        IF UPDATING('APE_PASAJERO') THEN
+           MENSAJE := MENSAJE ||', APELLIDO ANTERIOR: '||:OLD.APE_PASAJERO || ', APELLIDO NUEVO: '||:NEW.APE_PASAJERO ||'. ';
+        END IF;
+        
+        IF UPDATING('DIR_PASAJERO') THEN
+         MENSAJE := MENSAJE ||', DIRECCIÓN ANTERIOR: '||:OLD.DIR_PASAJERO || ', DIRECCION NUEVA: '||:NEW.DIR_PASAJERO ||'. ';
+        END IF;
+    END IF;
+
+    INSERT INTO AUDITA_PASAJEROS VALUES (MENSAJE);
+
+END;
+
+INSERT INTO PASAJEROS VALUES(124,'PABLO', 'ALEJO', 'SANTA SABINA','125987' );
+UPDATE PASAJEROS SET NOM_PASAJERO = 'PABLO' , APE_PASAJERO = 'ALEJO' WHERE COD_PASAJERO=124;
+DELETE FROM PASAJEROS WHERE COD_PASAJERO=124; 
+
+             
+ 

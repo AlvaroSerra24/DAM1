@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SchemaObject class="oracle.dbtools.crest.model.design.relational.SchemaObject" name="VIDEOJUEGOS" directorySegmentName="seg_0" id="345738DD-F56D-FFE6-3BB7-56445BEC2198">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</SchemaObject>

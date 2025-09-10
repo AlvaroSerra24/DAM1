@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="0054EA57-B938-BB55-7349-821AC206EBBA" containerWithKeyObject="087FC2A8-0836-ED68-6A79-6E67FB1A4C5B" localFKIndex="C7B4812C-4D7E-F306-69F0-7C8D6AD0441D" name="NICK_ACC_FK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>NICK_ACC_FK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<referredTableLongName>VIDEOJUEGOS.CUENTAS</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>E37EF578-A29E-DCD6-D746-D77393EA6EA8</referredTableID>
+<keyObject>03F4A17D-3FCA-6060-2DC4-EF0F22518443</keyObject>
+<referredKeyID>03F4A17D-3FCA-6060-2DC4-EF0F22518443</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>NICK</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

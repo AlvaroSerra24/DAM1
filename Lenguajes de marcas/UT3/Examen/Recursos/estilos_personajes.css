@@ -1,0 +1,16 @@
+/*Han de completarse los selectores que faltan, según los comentarios que hay
+encima de cada regla CSS */
+
+/* Todos los elementos con atributos src */
+
+img{
+    width: 75px;
+    height: 50px;
+}
+
+/* Todas las imágenes que tengan la clase "personaje" */
+
+.personajes{
+    width: 120px;
+    height: 120px;
+}

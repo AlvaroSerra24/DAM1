@@ -1,0 +1,99 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E37EF578-A29E-DCD6-D746-D77393EA6EA8" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="CUENTAS">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>CUENTAS</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="NICK" id="01E87FC2-210F-CFFE-D735-66C63FB55F14">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>CUENTAS</sourceObjSchema>
+<sourceObjName>NICK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHA_CREACION" id="DB5D7993-21FD-93D6-2551-42C4712E34D2">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>CUENTAS</sourceObjSchema>
+<sourceObjName>FECHA_CREACION</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DNI_JUG" id="8F302FA2-50EA-8BE6-9E06-814A6C9048C5">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>CUENTAS</sourceObjSchema>
+<sourceObjName>DNI_JUG</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>9 BYTE</dataTypeSize>
+<ownDataTypeParameters>9 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1EB4D08D-FAD5-6B2B-FED1-22DABECFC532" referredColumn="9F1DB69B-9FF5-E05C-58CE-491B79F83199"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5EE90309-E7CD-5525-F905-142E60074273" name="NICK_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>NICK_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="01E87FC2-210F-CFFE-D735-66C63FB55F14"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="03F4A17D-3FCA-6060-2DC4-EF0F22518443" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="NICK_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>NICK_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="01E87FC2-210F-CFFE-D735-66C63FB55F14"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="89285764-9126-8991-CA82-A34F77A3262E" name="DNI_JUG_FK">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:07 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8F302FA2-50EA-8BE6-9E06-814A6C9048C5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

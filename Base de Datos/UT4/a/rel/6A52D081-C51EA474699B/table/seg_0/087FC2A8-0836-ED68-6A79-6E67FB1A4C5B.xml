@@ -1,0 +1,114 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="087FC2A8-0836-ED68-6A79-6E67FB1A4C5B" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="CUENTAS_TIENEN_JUEGOS">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>CUENTAS_TIENEN_JUEGOS</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="NICK" id="0A3E573D-1A62-EED1-1B5B-75313350E124">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>CUENTAS_TIENEN_JUEGOS</sourceObjSchema>
+<sourceObjName>NICK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0054EA57-B938-BB55-7349-821AC206EBBA" referredColumn="01E87FC2-210F-CFFE-D735-66C63FB55F14"/>
+</associations>
+</Column>
+<Column name="COD_JUEGO" id="8DAEE5D5-7500-4F72-0C2B-34510CD0EB0E">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>CUENTAS_TIENEN_JUEGOS</sourceObjSchema>
+<sourceObjName>COD_JUEGO</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D9CCD9B3-4D83-8AEC-2D7B-5A4F7746AF2E" referredColumn="52A97EA1-5A93-B98C-660C-53EBCB2EC62A"/>
+</associations>
+</Column>
+<Column name="FECHA_COMPRA" id="53967485-E639-0BD8-43A4-C16CCCC8BFA2">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>CUENTAS_TIENEN_JUEGOS</sourceObjSchema>
+<sourceObjName>FECHA_COMPRA</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F675366E-92B1-7B45-72A4-8BC00B99D618" name="NICK_COD_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>NICK_COD_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0A3E573D-1A62-EED1-1B5B-75313350E124"/>
+<colUsage columnID="8DAEE5D5-7500-4F72-0C2B-34510CD0EB0E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4330A17B-3077-7BC0-C982-D5316352B0CA" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="NICK_COD_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>NICK_COD_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0A3E573D-1A62-EED1-1B5B-75313350E124"/>
+<colUsage columnID="8DAEE5D5-7500-4F72-0C2B-34510CD0EB0E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8F5F0854-6D7F-DE77-ED11-7F08F01F13E7" name="COD_JUE_FK">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8DAEE5D5-7500-4F72-0C2B-34510CD0EB0E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C7B4812C-4D7E-F306-69F0-7C8D6AD0441D" name="NICK_ACC_FK">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0A3E573D-1A62-EED1-1B5B-75313350E124"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

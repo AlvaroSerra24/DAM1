@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="CUENTAS_TIENEN_JUEGOS" directorySegmentName="seg_0" id="087FC2A8-0836-ED68-6A79-6E67FB1A4C5B">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<schemaObject>345738DD-F56D-FFE6-3BB7-56445BEC2198</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>FB9FAAFE-41A8-DBF6-2624-18423A50C0A6</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="NICK" id="0A3E573D-1A62-EED1-1B5B-75313350E124">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="FECHA_COMPRA" id="53967485-E639-0BD8-43A4-C16CCCC8BFA2">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="COD_JUEGO" id="8DAEE5D5-7500-4F72-0C2B-34510CD0EB0E">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="NICK_COD_PK" id="4330A17B-3077-7BC0-C982-D5316352B0CA">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<schemaObject>345738DD-F56D-FFE6-3BB7-56445BEC2198</schemaObject>
+<segment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="COD_JUE_FK" id="8F5F0854-6D7F-DE77-ED11-7F08F01F13E7">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="NICK_ACC_FK" id="C7B4812C-4D7E-F306-69F0-7C8D6AD0441D">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="NICK_COD_PK" id="F675366E-92B1-7B45-72A4-8BC00B99D618">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:52:36 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<segment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+<existingIndex>4330A17B-3077-7BC0-C982-D5316352B0CA</existingIndex>
+<indexSegment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

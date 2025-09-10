@@ -1,0 +1,54 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="COMPETICIONES" directorySegmentName="seg_0" id="EFA7C2C3-98B2-E7CC-CC08-B4312ABFA3C1">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<schemaObject>345738DD-F56D-FFE6-3BB7-56445BEC2198</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>FB9FAAFE-41A8-DBF6-2624-18423A50C0A6</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="FECHA_COMPETICIÓN" id="30D6B7EE-3EBB-2B0E-652C-B94104609E2E">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="COD_COMPETICIÓN" id="9A3891A8-9809-5AD5-C306-8329B0A10E3C">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOMBRE" id="A85C8135-EBC4-5449-BD92-345E2153D5C5">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="COM_COD_PK" id="B2FD54F5-6248-47A7-9DA2-A667EEDD779E">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<schemaObject>345738DD-F56D-FFE6-3BB7-56445BEC2198</schemaObject>
+<segment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="COM_COD_PK" id="F8C7E34A-128B-A98B-F296-3244F7AB3EBB">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<segment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+<existingIndex>B2FD54F5-6248-47A7-9DA2-A667EEDD779E</existingIndex>
+<indexSegment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

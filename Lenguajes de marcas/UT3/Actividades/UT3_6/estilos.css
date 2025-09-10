@@ -1,0 +1,40 @@
+body{
+    background-image: url(Recursos/imagenes/fondo.jpg); /*Sirve para poner la imagen de fondo*/
+    color:#5C6884 ;/*Para darle el color a todo el texto*/
+    font-variant: small-caps;/*Para que todas las letras esten en mayuscula pequeñas*/
+    font-weight: bold;/*Para que todo el texto este en negrita*/
+    font-style: italic;/*Para que todo el texto este en cursiva*/
+    
+}
+header{
+    font-size: 30px;/*El temaño del texto*/
+    font-family: 'CandyCane';/*La tipografia del texto*/
+    text-align: center;/*Para que este centrado en su caja*/
+    background-color: #F7D1CF;/*El color del fondo*/
+    padding: auto;/*Para que el texto tenga separacion dentro de la caja*/
+    margin-left: 10%;/*Para que la caja tenga margenes por la izquierda*/
+    margin-right: 10%;/*Para que la caja tenga margenes por la derecha*/
+}
+nav{
+    font-family:'Tahoma';/*La tipografia del texto*/
+    text-align: center;/*Para que el texto este centrado en la caja*/
+    background-color: #F7D1CF;/*El color del fondo de la caja*/
+    padding-top: 1%;/*Para que el texto tenga separacion dentro de la caja por arriba*/
+    padding-bottom: 1%;/*Para que el texto tenga separacion dentro de la caja por abajo*/
+    margin-left: 10%;/*Para que la caja tenga margenes por la izquierda*/
+    margin-right: 10%;/*Para que la caja tenga margenes por la derecha*/
+}
+footer{
+    font-family:'Tahoma';/*La tipografia del texto*/
+    text-align: right;/*Para que el texto este se mueve a la derecha en la caja*/
+    background-color: #F7D1CF;/*El color del fondo de la caja*/
+    padding: auto;/*Para que el texto tenga separacion dentro de la caja*/
+    margin-left: 10%;/*Para que la caja tenga margenes por la izquierda*/
+    margin-right: 10%;/*Para que la caja tenga margenes por la derecha*/
+}
+@font-face {/*Para importar una nueva fuente de texto*/
+    font-family: 'CandyCane';
+    src: url(Recursos/fuentes/CandyCane.ttf);
+}
+
+

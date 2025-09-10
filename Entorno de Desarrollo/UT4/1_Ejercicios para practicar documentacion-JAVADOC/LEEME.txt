@@ -1,0 +1,5 @@
+1) Comenta correctamente, utilizando JAVADOC
+2) Genera la documentación de código fuente de todos estos ejercicios.
+3) Explora por los archivos generados y observa toda la información que se genera automáticamente.
+
+**************ESTOS EJERCICIOS NO SE ENTREGAN******************

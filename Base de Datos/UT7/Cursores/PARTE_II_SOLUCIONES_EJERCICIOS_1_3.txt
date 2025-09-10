@@ -1,0 +1,275 @@
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+
+/* Programa que visualice por cada departamento: el departamento, el número de 
+empleados, la media de salario, el salario máximo, el salario mínimo y 
+la suma de salarios.
+
+DEPT_NO   NUM EMPLES   MEDIA SALARIO   SALARIO MAX   SALARIO MIN  SUMA SALARIO
+-------   ----------- -------------- --------------- ------------  -----------
+xxxxxx    xxxxxxxxxx    xxxxxxxxxx     xxxxxxxxxxx    xxxxxxxxxxx     xxxxxxx
+xxxxxx    xxxxxxxxxx    xxxxxxxxxx     xxxxxxxxxxx    xxxxxxxxxxx     xxxxxxx
+
+TOTALES : xxxtemples   xxtmsalxxxx     xxxxtsmaxxxx   xxxtsminxxxx   tsumaxxxx
+*/
+
+DECLARE
+    CURSOR C1 IS 
+        SELECT DEPT_NO, COUNT(*) NUM_EMPLE, AVG(SALARIO) MEDIA_SAL,
+               MAX(SALARIO) MAXSAL, MIN(SALARIO) MINSAL, SUM(SALARIO) SUMA
+        FROM EMPLE
+        GROUP BY DEPT_NO;
+    
+    REG C1%ROWTYPE;
+    TEMPLES NUMBER(5):=0; -- NUMERO TOTAL EMPLEADOS
+    TMSAL NUMBER(9,2):=0; -- MEDIA SALARIOS 
+    TSMAX NUMBER(9,2):=0; -- MAXIMO SALARIO
+    TSMIN NUMBER(9,2):=0; -- SALRIO MINIMO
+    TSUMA NUMBER(9,2):=0; --SUMA SALARIOS
+    
+      
+
+BEGIN 
+    -- CABECERAS 
+    DBMS_OUTPUT.PUT_LINE('DEPT_NO   NUM EMPLES   MEDIA SALARIO   SALARIO MAX   SALARIO MIN  SUMA SALARIO');
+    DBMS_OUTPUT.PUT_LINE('-------   ----------- -------------- --------------- ------------  -----------');
+    -- ABRIR CURSOR
+    OPEN C1;
+    
+    LOOP
+        FETCH C1 INTO REG;
+        EXIT WHEN C1%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE( RPAD(TO_CHAR(REG.DEPT_NO),10,' ')||
+                              RPAD(TO_CHAR(REG.NUM_EMPLE),12,' ')||
+                              RPAD(TO_CHAR(REG.MEDIA_SAL,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(REG.MAXSAL,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(REG.MINSAL,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(REG.SUMA,'99G999D99'),15,' '));
+        TEMPLES:=TEMPLES+REG.NUM_EMPLE;
+        TMSAL := TMSAL+REG.MEDIA_SAL;
+        TSMAX:=TSMAX+REG.MAXSAL;
+        TSMIN:=TSMIN+REG.MINSAL;
+        TSUMA:=TSUMA+REG.SUMA;
+    END LOOP;
+    CLOSE C1;
+    DBMS_OUTPUT.PUT_LINE('-------   ----------- -------------- --------------- ------------  -----------');
+    DBMS_OUTPUT.PUT_LINE( RPAD('TOTALES',10,' ')||
+                              RPAD(TO_CHAR(TEMPLES),12,' ')||
+                              RPAD(TO_CHAR(TMSAL,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(TSMAX,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(TSMIN,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(TSUMA,'99G999D99'),15,' '));
+
+
+END;
+
+/* MISMO EJERCICIO PERO CON WHILE */
+DECLARE
+    CURSOR C1 IS 
+        SELECT DEPT_NO, COUNT(*) NUM_EMPLE, AVG(SALARIO) MEDIA_SAL,
+               MAX(SALARIO) MAXSAL, MIN(SALARIO) MINSAL, SUM(SALARIO) SUMA
+        FROM EMPLE
+        GROUP BY DEPT_NO;
+    
+    REG C1%ROWTYPE;
+    TEMPLES NUMBER(5):=0; -- NUMERO TOTAL EMPLEADOS
+    TMSAL NUMBER(9,2):=0; -- MEDIA SALARIOS 
+    TSMAX NUMBER(9,2):=0; -- MAXIMO SALARIO
+    TSMIN NUMBER(9,2):=0; -- SALRIO MINIMO
+    TSUMA NUMBER(9,2):=0; --SUMA SALARIO         
+BEGIN 
+    -- CABECERAS 
+    DBMS_OUTPUT.PUT_LINE('DEPT_NO   NUM EMPLES   MEDIA SALARIO   SALARIO MAX   SALARIO MIN  SUMA SALARIO');
+    DBMS_OUTPUT.PUT_LINE('-------   ----------- -------------- --------------- ------------  -----------');
+    -- ABRIR CURSOR
+    OPEN C1;
+    -- DEBEMOS CAPTURAR UN FILA PARA LA PRIMERA COMPROBACIÓN DEL BUCLE
+    FETCH C1 INTO REG;
+    WHILE C1%FOUND LOOP
+       DBMS_OUTPUT.PUT_LINE( RPAD(TO_CHAR(REG.DEPT_NO),10,' ')||
+                              RPAD(TO_CHAR(REG.NUM_EMPLE),12,' ')||
+                              RPAD(TO_CHAR(REG.MEDIA_SAL,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(REG.MAXSAL,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(REG.MINSAL,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(REG.SUMA,'99G999D99'),15,' '));
+        TEMPLES:=TEMPLES+REG.NUM_EMPLE;
+        TMSAL := TMSAL+REG.MEDIA_SAL;
+        TSMAX:=TSMAX+REG.MAXSAL;
+        TSMIN:=TSMIN+REG.MINSAL;
+        TSUMA:=TSUMA+REG.SUMA;
+        FETCH C1 INTO REG; -- CAPTURAR LA SIGUIENTE FILA DEL CURSOR
+    END LOOP;
+    CLOSE C1;
+    DBMS_OUTPUT.PUT_LINE('-------   ----------- -------------- --------------- ------------  -----------');
+    DBMS_OUTPUT.PUT_LINE( RPAD('TOTALES',10,' ')||
+                              RPAD(TO_CHAR(TEMPLES),12,' ')||
+                              RPAD(TO_CHAR(TMSAL,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(TSMAX,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(TSMIN,'99G999D99'),15,' ')||
+                              RPAD(TO_CHAR(TSUMA,'99G999D99'),15,' '));
+END;
+
+/*
+2.	Programa que lea de teclado un nombre departamento 
+(UTILIZANDO VARIABLES DE SUSTITUCIÓN) y visualice los empleados del departamento. 
+Obtener este listado
+NOMBRE DE DEPARTAMENTO: XXXXXXXXX
+EMPNO     APELLIDO     SALARIO        FECHA_ALTA      COMISION    SALARIO+COMISION 
+-------   ----------- -------------- --------------- ------------  ------------
+xxxxxx    xxxxxxxxxx    xxxxxxxxxx     xxxxxxxxxxx    xxxxxxxxxxx     xxxxxxx
+xxxxxx    xxxxxxxxxx    xxxxxxxxxx     xxxxxxxxxxx    xxxxxxxxxxx     xxxxxxx
+
+TOTAL SALARIO: XXXXX  TOTALSAL
+TOTAL SALARIO+comision: XXXXX  TOTALSALCOM */
+DECLARE
+    CURSOR C1 IS SELECT EMP_NO, APELLIDO, SALARIO, FECHA_ALT,COMISION, DEPT_NO
+                 FROM EMPLE;
+    REGEMP C1%ROWTYPE;
+    TOTALSAL NUMBER(8):=0;
+    TOTALSALCOM NUMBER(8):=0;
+    
+    NOMBRE_DEPT VARCHAR2(14):='&NOMBRE_DEPARTAMENTO';
+    REGDPTO DEPART%ROWTYPE;
+    
+BEGIN
+    -- COMPROBAR SI EL DEPARTAMENTEO
+    SELECT * INTO REGDPTO FROM DEPART 
+    WHERE UPPER(DNOMBRE) LIKE NOMBRE_DEPT;
+    -- CABECERA
+    DBMS_OUTPUT.PUT_LINE('NOMBRE DE DEPARTAMENTO: '|| REGDPTO.DNOMBRE);
+    DBMS_OUTPUT.PUT_LINE('EMPNO     APELLIDO     SALARIO        FECHA_ALTA      COMISION    SALARIO+COMISION ');
+    DBMS_OUTPUT.PUT_LINE('-------   ----------- -------------- --------------- ------------  ------------');
+    OPEN C1;
+    FETCH C1 INTO REGEMP;
+    WHILE C1%FOUND LOOP
+        IF REGEMP.DEPT_NO=REGDPTO.DEPT_NO THEN
+            DBMS_OUTPUT.PUT_LINE(RPAD(TO_CHAR(REGEMP.EMP_NO),10,' ')||
+                                 RPAD(REGEMP.APELLIDO, 10,' ')||
+                                 RPAD(TO_CHAR(REGEMP.SALARIO,'9G999G999'),18,' ')||
+                                 RPAD(TO_CHAR(REGEMP.FECHA_ALT),16,' ')||
+                                 RPAD(TO_CHAR(NVL(REGEMP.COMISION,0),'9G999G999'),13,' ')||
+                                 TO_CHAR(NVL(REGEMP.COMISION,0)+REGEMP.SALARIO,'99G999G999'));
+            TOTALSAL:=TOTALSAL+REGEMP.SALARIO;
+            TOTALSALCOM:=TOTALSALCOM+REGEMP.SALARIO+NVL(REGEMP.COMISION,0);
+        END IF;
+        FETCH C1 INTO REGEMP;
+    END LOOP;
+    CLOSE C1;
+    
+    DBMS_OUTPUT.PUT_LINE('TOTAL SALARIO: '||TO_CHAR(TOTALSAL,'99G999G999'));
+    DBMS_OUTPUT.PUT_LINE('TOTAL SALARIO+COMISIONES: '||TO_CHAR(TOTALSALCOM,'99G999G999'));
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+            DBMS_OUTPUT.PUT_LINE('EL DEPARTAMENTO INTRODUCIDO NO EXISTE');
+END;
+
+-- MISMO EJERCICIO CON CURSOR CON PARÁMETROS
+DECLARE
+    CURSOR C1(NOMBRE_DEPT VARCHAR2) IS 
+        SELECT EMP_NO, APELLIDO, SALARIO, FECHA_ALT,COMISION, DEPT_NO
+        FROM EMPLE
+        WHERE DEPT_NO IN (SELECT DEPT_NO 
+                          FROM DEPART
+                          WHERE UPPER(DNOMBRE) LIKE UPPER(NOMBRE_DEPT));
+    REGEMP C1%ROWTYPE;
+    TOTALSAL NUMBER(8):=0;
+    TOTALSALCOM NUMBER(8):=0;
+    NOMBRE_DEPT VARCHAR2(14):='&NOMBRE_DEPARTAMENTO';
+       
+BEGIN
+    
+    OPEN C1(NOMBRE_DEPT);
+    FETCH C1 INTO REGEMP;
+    IF C1%NOTFOUND THEN
+       DBMS_OUTPUT.PUT_LINE('NO EXISTEN EMPLEADOS PARA ESE DPTO');
+    ELSE
+        -- CABECERA
+        DBMS_OUTPUT.PUT_LINE('NOMBRE DE DEPARTAMENTO: '|| NOMBRE_DEPT);
+        DBMS_OUTPUT.PUT_LINE('EMPNO     APELLIDO     SALARIO        FECHA_ALTA      COMISION    SALARIO+COMISION ');
+        DBMS_OUTPUT.PUT_LINE('-------   ----------- -------------- --------------- ------------  ------------');
+    
+        WHILE C1%FOUND LOOP
+            
+                DBMS_OUTPUT.PUT_LINE(RPAD(TO_CHAR(REGEMP.EMP_NO),10,' ')||
+                                     RPAD(REGEMP.APELLIDO, 10,' ')||
+                                     RPAD(TO_CHAR(REGEMP.SALARIO,'9G999G999'),18,' ')||
+                                     RPAD(TO_CHAR(REGEMP.FECHA_ALT),16,' ')||
+                                     RPAD(TO_CHAR(NVL(REGEMP.COMISION,0),'9G999G999'),13,' ')||
+                                     TO_CHAR(NVL(REGEMP.COMISION,0)+REGEMP.SALARIO,'99G999G999'));
+                TOTALSAL:=TOTALSAL+REGEMP.SALARIO;
+                TOTALSALCOM:=TOTALSALCOM+REGEMP.SALARIO+NVL(REGEMP.COMISION,0);
+           
+                FETCH C1 INTO REGEMP;
+        END LOOP;
+        CLOSE C1;
+        DBMS_OUTPUT.PUT_LINE('TOTAL SALARIO: '||TO_CHAR(TOTALSAL,'99G999G999'));
+        DBMS_OUTPUT.PUT_LINE('TOTAL SALARIO+COMISIONES: '||TO_CHAR(TOTALSALCOM,'99G999G999'));
+
+    END IF;
+        EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+            DBMS_OUTPUT.PUT_LINE('EL DEPARTAMENTO INTRODUCIDO NO EXISTE');
+END;
+
+
+/*** BD ALMACEN ***/
+/*3.	Realizar un bloque PL para visualizar los artículos de un 
+número de compra leído de teclado. Obtener
+NUM COMPRA  CODARTI   DENOMINACION  CATEGORIA  UNIDADES  PVP  IMPORTE  STOCK-ACTUAL
+----------  ---------  -------------- ---------- ---------- ------ -------- -------
+xxxxxxxxxx    xxxx     xxxxxxxxxx    xxxxxx    xxxxx     xxxx   xxxxxx    xxxxxxx
+xxxxxxxxxx    xxxx     xxxxxxxxxx    xxxxxx     xxxxx     xxxx   xxxxxx    xxxxxxx
+----------  ---------  -------------- ---------- ---------- ------ -------- -------
+TOTALES DE UNIDADES: xxxxxx
+TOTAl IMPORTE: xxxxxxxx
+
+Donde IMPORTE = PVP * UNIDADES
+STOCK-ACTUAl = STOCK – UNIDADES
+*/
+
+DECLARE
+    -- DECLARAR CURSOR 
+    CURSOR C1 (NCOMP NUMBER) IS
+        SELECT NUM_COMPRA, CODARTI, DENOMINACION, CATEGORIA, UNIDADES, PVP, 
+               PVP*UNIDADES IMPORTE,STOCK-UNIDADES STOCKACTUAL
+        FROM ARTICULOS JOIN DET_COMPRAS USING(CODARTI) 
+        WHERE NUM_COMPRA=NCOMP;
+    REG C1%ROWTYPE;
+    
+    -- LEER NÚMERO DE COMPRA
+    NUMCOMPRA NUMBER(5):=&NUMERO_COMPRA;
+    CONT NUMBER(2):=0;
+    TOTALUNIDADES NUMBER(6):=0;
+    TOTALIMPORTE NUMBER(8,2):=0;
+    
+    NC NUMBER(5):=0;
+BEGIN
+    -- COMPROBAR QUE EL NÚMERO DE COMPRA ES CORRECTO. 
+    SELECT NUM_COMPRA INTO NC FROM COMPRAS WHERE NUM_COMPRA=NUMCOMPRA;
+    
+    -- EXISTE EL NÚMERO DE COMPRA
+    DBMS_OUTPUT.PUT_LINE('NUM COMPRA  CODARTI   DENOMINACION  CATEGORIA  UNIDADES  PVP  IMPORTE  STOCK-ACTUAL');
+    DBMS_OUTPUT.PUT_LINE('----------  ---------  -------------- ---------- ---------- ------ -------- -------');
+    OPEN C1(NUMCOMPRA);
+    LOOP
+        FETCH C1 INTO REG;
+        EXIT WHEN C1%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(RPAD(TO_CHAR(REG.NUM_COMPRA),12,' ')||
+                             RPAD(TO_CHAR(REG.CODARTI),10,' ')||
+                             RPAD(REG.CATEGORIA,12,' ') ||
+                             RPAD(TO_CHAR(REG.UNIDADES),8,' '));
+        
+        TOTALUNIDADES:=TOTALUNIDADES+REG.UNIDADES;
+        TOTALIMPORTE:=TOTALIMPORTE+(REG.UNIDADES*REG.PVP);
+    
+    END LOOP;
+    CLOSE C1;
+    DBMS_OUTPUT.PUT_LINE('TOTALES DE UNIDADES: '||
+                         TO_CHAR(TOTALUNIDADES,'999G999'));
+                         
+    DBMS_OUTPUT.PUT_LINE('TOTALES IMPORTE: '||
+                         TO_CHAR(TOTALIMPORTE,'99G999G999D99'));
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('NO EXISTE LA COMPRA');
+END;

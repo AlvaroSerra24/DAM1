@@ -1,0 +1,69 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="JUEGOS" directorySegmentName="seg_0" id="A2291B85-0A6C-5EA7-236D-BAAE88A5D4D0">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<schemaObject>345738DD-F56D-FFE6-3BB7-56445BEC2198</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>FB9FAAFE-41A8-DBF6-2624-18423A50C0A6</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="COMPAÑIA_SERVIDOR" id="167184DE-4F04-D204-AD97-496127CB9360">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DURACION" id="2DDC2C36-7DA3-8F9E-53A1-9E05FE8411D3">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="COD_JUEGO" id="52A97EA1-5A93-B98C-660C-53EBCB2EC62A">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PRECIO" id="A7278240-EDBE-962B-45CD-3232EEEA9A70">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TIPO" id="B42AE46C-22EB-A10E-2EA6-6E96C8FBC486">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOMBRE" id="D022B3E2-404E-2DFE-54F3-DA63BFD5FCEC">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="COD_PK" id="D34BE2CF-F9E9-8B9B-32E9-2D172322C07C">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<schemaObject>345738DD-F56D-FFE6-3BB7-56445BEC2198</schemaObject>
+<segment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="COD_PK" id="860C80CD-4167-F459-B8EF-7959B9C66D82">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:23 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<segment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</segment>
+<tableSpace>6CB12476-7C66-C0B9-7B04-E4F2179D4F9F</tableSpace>
+<existingIndex>D34BE2CF-F9E9-8B9B-32E9-2D172322C07C</existingIndex>
+<indexSegment>FEBF54B8-C990-3828-6B7A-2ADC80B7D8CD</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

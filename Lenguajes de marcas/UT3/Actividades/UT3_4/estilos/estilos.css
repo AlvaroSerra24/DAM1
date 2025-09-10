@@ -1,0 +1,64 @@
+/* CSS CON COLORES */
+
+
+
+a:visited {
+    color: red;
+}
+
+a:hover {
+    color: rgb(146, 0, 209);
+    font-weight: bold;
+}
+
+a:active {
+    color: rgb(6%, 80%, 20%)
+}
+
+ul {
+    list-style-type: none;
+}
+
+h1,
+h2 {
+    color: #8b0000
+}
+
+#recomendamos {
+    font-style: italic
+}
+
+.resaltado {
+    color: rgb(0, 0, 138);
+    font-weight: bold
+}
+
+h1:hover {
+    color: green
+}
+
+ol .resaltado {
+    color: darkmagenta;
+}
+
+div>p {
+    text-indent: 15px
+}
+
+.rectangulo1
+{
+width: 250px; height: 35px;
+background-color: rgba(245, 245, 219, 0.863)
+}
+
+.rectangulo2
+{
+width: 35%; height: 5%;
+background-color: beige;
+}
+
+.rectangulo3
+{
+width: 12em; height: 2em;
+background-color: beige;
+}

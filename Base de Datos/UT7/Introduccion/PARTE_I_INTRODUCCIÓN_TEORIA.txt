@@ -1,0 +1,176 @@
+/* INTRODUCCIÓN: 
+   - PL/SQL AUMENTA LAS POSIBILIDADES DE SQL PORQUE;
+      * PODEMOS DECLARA VBLES, CTES, PROCEDURES Y FUNCIONES,
+      * TB PODEMOS IMPLEMENTAR TRIGGER, ACCIONES QUE SE PONEN EN MARCHA 
+      CUANDO HACEMOS INSERT, DELETE O UPDATE. 
+   - SINTAXIS: 
+      * ZONA DE DECLARE, BEGIN (SENTENCIAS Y TRATAMIENTO DE EXCEPCIONES) Y 
+       END
+*/      
+/* PROCEDURE HOLA MUNDO */
+SET SERVEROUTPUT ON;
+BEGIN 
+    dbms_output.put_line('HOLA MUNDO');
+END;
+
+/* EJEMPLO PAG. 3 APUNTES */
+SET VERIFY OFF -- para no mostrar por pantalla el valor anterior de la variable
+SET SERVEROUTPUT ON
+
+DECLARE
+  v_fecha DATE:='&fecha';
+BEGIN
+ DBMS_OUTPUT.PUT_LINE('La fecha introducida es: '||TO_CHAR(v_fecha)); --esta es la forma correcta
+ DBMS_OUTPUT.PUT_LINE('La fecha introducida es: '||TO_CHAR('&fecha'));
+END;
+
+/* PROCEDURE HOLA + nombre leido de teclado */
+SET SERVEROUTPUT ON;
+DECLARE
+ tu_nombre VARCHAR2(20):='&nombre';
+BEGIN 
+    dbms_output.put_line('HOLA '||tu_nombre);
+END;
+
+/* LEER DATOS CON FORMATO Y PARA QUE ME PIDA EL DATO CON EL 
+MENSAJE QUE YO QUIERA, USAMOS 
+   ACCEPT variable [NUMBER|CHAR|DATE] [FORMAT][PROMPT text] [HIDE]
+EJ. PAG 3 APUNTES */
+SET VERIFY OFF 
+SET SERVEROUTPUT ON
+ACCEPT precio NUMBER FORMAT 9999 PROMPT 'Teclea precio: '
+ACCEPT iva NUMBER FORMAT 99.99 PROMPT 'Teclea IVA: '
+ACCEPT uni NUMBER FORMAT 999 PROMPT 'Teclea unidades: '
+
+DECLARE
+  V_precio NUMBER:= &precio;
+  V_iva NUMBER:= &iva;
+  V_uni NUMBER:= &uni;
+  factura number(9,3);
+BEGIN
+  Factura:= v_uni*v_precio + v_uni*v_precio* (v_iva/100);
+  Dbms_output.put_line(' El importe es : ' || to_char(factura));
+END;
+
+/* EJEMPLO: LEE POR PANTALLA TU NOMBRE Y LA EDAD QUE TIENES, LA EDAD DEBE 
+SER UN ENTERO DE DOS DÍGITOS. MUESTRA LO SIGUIENTE: 
+HOLA nombre, tienes edad años*/
+SET SERVEROUTPUT ON;
+ACCEPT nombre PROMPT '¿Cómo te llamas? ';
+ACCEPT edad NUMBER FORMAT 99 PROMPT 'Dime tu edad: ';
+
+DECLARE
+ tu_nombre VARCHAR2(20):='&nombre';
+ tu_edad NUMBER:='&edad';
+BEGIN 
+    dbms_output.put_line
+       ('HOLA '||tu_nombre||' ,tienes '||to_char(tu_edad)||' años.');
+END;
+
+/* En el fichero de teoría, teneis todos los caracteres especiales, 
+los literales, los tipos de datos, numéricos, alfanúmericos...estos aspectos
+mejor los leeis vosotros, vale? */
+
+/* SE PUEDEN declarar variables del mismo
+tipo que un campo determinado de una tabla, 
+POR Ejemplo, vamos a declara una variable del mismo tipo que el campo
+población de la tabla de ALMACENES: */
+SET SERVEROUTPUT ON;
+ACCEPT pob_ant PROMPT 'Nombre poblacion a modificar: ';
+ACCEPT pob_new PROMPT 'Nombre poblacion nueva: ';
+DECLARE
+  pob_a_modificar ALMACENES.poblacion%TYPE:='&pob_ant';
+  pob_nueva ALMACENES.poblacion%TYPE:='&pob_new';
+BEGIN
+  UPDATE ALMACENES SET poblacion=pob_nueva 
+     WHERE UPPER(poblacion) LIKE UPPER(pob_a_modificar);
+END;
+  
+/* SE PUEDEN DECLARAR "REGISTROS" CON LOS MISMOS TIPOS DE DATOS 
+QUE LOS ELEMENTOS DE UNA fila de una tabla */
+/* Por ejemplo: vamos a declar un */
+DECLARE
+  R_ALMACEN ALMACENES%ROWTYPE;
+BEGIN
+-- INICIALIZACIÓN DE CAMPOS DE LA VARIABLE
+  R_ALMACEN.CODALMA:=9;
+  R_ALMACEN.NOMBRE:='ALMACEN 9';
+  R_ALMACEN.POBLACION:='TALAVERA DE LA REINA';
+  R_ALMACEN.FACTURACION:=12000;
+  INSERT INTO ALMACENES 
+   VALUES(R_ALMACEN.CODALMA,R_ALMACEN.NOMBRE,R_ALMACEN.POBLACION,R_ALMACEN.FACTURACION); 
+   
+   DBMS_OUTPUT.PUT_LINE('REGISTRO INSERTADO.');
+END;
+
+/* ESTRUCTURAS DE CONTROL: IF THEN, IF THEN ELSE, IF THEN ELSEIF ELSEIF...*/
+/* EJ. PAG 8 */
+DECLARE
+    NUME NUMBER(5):=&NUMERO;
+BEGIN
+   IF NUME>100 THEN
+        DBMS_OUTPUT.PUT_LINE('EL NÚMERO LEÍDO '||NUME ||' ES > DE 100');
+   END IF;
+END;
+/* EJE IF THEN ELSE */
+DECLARE
+    NUME NUMBER(5):=&NUMERO;
+BEGIN
+   IF NUME>100 THEN
+        DBMS_OUTPUT.PUT_LINE('EL NÚMERO LEÍDO '||NUME ||' ES > DE 100');
+   ELSE 
+       DBMS_OUTPUT.PUT_LINE('EL NÚMERO LEÍDO '||NUME ||' ES < DE 100');
+   END IF;
+END;
+
+/* EJEMPLO ELSE IF: SE LEERÁ UN NÚMERO DE ASIENTO POR TECLADO.
+   - [0 - 10], LE CORRESPONDERÁ LA FILA 1 DEL TEATRO.
+   -[11 - 30], LE CORRESPONDERÁ LA FILA 2. 
+   - [31 - 70], FILA 3
+   - EL RESTO DE NÚMEROS, SE UBICARÁN EN EL ANFITEATRO */
+DECLARE
+  num_asiento NUMBER(5):='&asiento';
+  FILA VARCHAR(20);
+BEGIN
+    IF num_asiento BETWEEN 1 AND 10 THEN FILA:='FILA 1'; 
+        ELSIF num_asiento BETWEEN 11 AND 30 THEN FILA:='FILA 2';
+        ELSIF num_asiento BETWEEN 31 AND 70 THEN FILA:='FILA 3';
+    ELSE FILA:='ANFITEATRO';
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('DEBE SENTARSE EN '||FILA);
+END;  
+
+/* EJEMPLO DE CASE PAG. 9 */
+DECLARE
+   PRECIO NUMBER(3):=100;
+   DESCUENTO NUMBER(2):=0;
+BEGIN
+CASE
+  WHEN PRECIO<11 THEN DESCUENTO:=2;
+  WHEN PRECIO>10 AND PRECIO<25 THEN DESCUENTO:=5;
+  WHEN PRECIO>24 THEN DESCUENTO:=10;
+  ELSE DESCUENTO:=15;
+END CASE;
+DBMS_OUTPUT.PUT_LINE('DESCUENTO='||DESCUENTO);
+END;
+
+/* EJEMPLO DE CASE PAG. 9: MODIFICARLO PARA LEER DE PANTALLA */
+DECLARE
+   PRECIO NUMBER(3):=&pre;
+   DESCUENTO NUMBER(2):=0;
+BEGIN
+CASE
+  WHEN PRECIO<11 THEN DESCUENTO:=2;
+  WHEN PRECIO>10 AND PRECIO<24 THEN DESCUENTO:=5;
+  WHEN PRECIO>25 THEN DESCUENTO:=10;
+  ELSE DESCUENTO:=15;
+END CASE;
+DBMS_OUTPUT.PUT_LINE('DESCUENTO='||DESCUENTO);
+END;
+
+
+
+
+
+   
+

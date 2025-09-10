@@ -1,0 +1,187 @@
+
+/* 1.	Utilizar un cursor con parámetros es muy útil en bloques PL que pidan informes de este tipo. 
+Por ejemplo, con las tablas emple y depart. Visualizar por cada departamento los empleados que tiene, 
+el total y la media de salario.  
+Se necesitan 2 cursores uno para recorrer los datos de la tabla depart y otro para recorrer los datos de 
+la tabla emple. Este segundo cursor llevará el parámetro, que será el dept_no del registro del cursor de los datos 
+de los departamentos.
+El cursor emple se debe abrir por cada lectura del cursor depart.
+Por departamento debe salir el siguiente informe:
+NUM DEPART:  xxxx  NOMBRE DEPART: xxxx  LOCALIDA: xxxxxxx
+
+APELLIDO        OFICIO          SALARIO    FECHA_ALT
+--------------- --------------- --------- ------------
+xxxxxxx          xxxxxxxx        xxxxxx      xxxxxx
+xxxxxxx          xxxxxxxx        xxxxxx      xxxxxx
+
+TOTAL SALARIO: xxx
+MEDIA SALARIO: xxxx
+
+NUM DEPART:  xxxx  NOMBRE DEPART: xxxx  LOCALIDA: xxxxxxx
+
+APELLIDO        OFICIO          SALARIO    FECHA_ALT
+--------------- --------------- --------- ------------
+xxxxxxx          xxxxxxxx        xxxxxx      xxxxxx
+xxxxxxx          xxxxxxxx        xxxxxx      xxxxxx
+
+TOTAL SALARIO: xxx
+MEDIA SALARIO: xxxx
+*/
+
+
+
+DECLARE
+   CURSOR C1 IS SELECT * FROM DEPART;
+   CURSOR C2(DEP NUMBER)  IS SELECT * FROM EMPLE WHERE DEPT_NO = DEP;
+  REGDEP C1%ROWTYPE;
+  REGEMP C2%ROWTYPE;
+  MEDIASAL NUMBER(8,2);
+  SUMASAL NUMBER(8,2);
+  CON NUMBER(5):=0;
+
+BEGIN
+OPEN C1;
+FETCH C1 INTO REGDEP;
+WHILE C1%FOUND LOOP
+   
+    DBMS_OUTPUT.PUT_LINE('NUM DEPART: '|| REGDEP.DEPT_NO ||
+              ' NOMBRE DEPART: '|| REGDEP.DNOMBRE ||
+              ' LOCALIDAD: '|| REGDEP.LOC);
+    DBMS_OUTPUT.PUT_LINE('-----------------------------------------------------------------');
+    OPEN C2(REGDEP.DEPT_NO);
+    FETCH C2 INTO REGEMP;
+    IF C2%NOTFOUND THEN
+        DBMS_OUTPUT.PUT_LINE(' DEPARTAMENTO SIN EMPLEADOS.');
+    ELSE 
+      DBMS_OUTPUT.PUT_LINE(' APELLIDO    OFICIO       SALARIO   FECHA_ALT');
+      DBMS_OUTPUT.PUT_LINE(' --------   ------------- --------- ------------');
+      CON:=0;
+      SUMASAL:=0;
+      WHILE C2%FOUND LOOP     
+	      DBMS_OUTPUT.PUT_LINE(' ' ||RPAD(REGEMP.APELLIDO,12)|| ' ' ||
+             RPAD(REGEMP.OFICIO,12)|| ' '||
+             RPAD(TO_CHAR(REGEMP.SALARIO),8)||
+              '  '|| REGEMP.FECHA_ALT);
+        SUMASAL := SUMASAL  + REGEMP.SALARIO;
+        CON :=CON + 1;
+        FETCH C2 INTO REGEMP;
+      END LOOP;
+      MEDIASAL := SUMASAL/CON;
+      DBMS_OUTPUT.PUT_LINE('-----------------------------------------------------------------');
+      DBMS_OUTPUT.PUT_LINE(' TOTAL SALARIO: ' || SUMASAL);
+      DBMS_OUTPUT.PUT_LINE(' MEDIA SALARIO: ' || MEDIASAL );
+   END IF;
+   CLOSE C2;
+   FETCH C1 INTO REGDEP;
+    
+    DBMS_OUTPUT.PUT_LINE('-----------------------------------------------------------------');
+     DBMS_OUTPUT.PUT_LINE(' ');
+END LOOP; --DEPART
+CLOSE C1;
+END;
+
+
+
+/* 2.	Visualizar por cada compra, el detalle de los artículos que componen la compra. LSIGUIENTE:   
+	NUM COMPRA: xxxxxx   Nombre Almacén: xxxxxxxx  Fecha de compra: xxxxxxxxx
+CODARTI    DENOMINACION   CATEGORIA  UNIDADES   PVP   IMPORTE  STOCK-ACTUAL
+---------  -------------- ---------- ---------- ------ -------- ------------
+  xxxx        xxxxxxxxxx    xxxxxx     xxxxx     xxxx   xxxxxx    xxxxxxx
+  xxxx        xxxxxxxxxx    xxxxxx     xxxxx     xxxx   xxxxxx    xxxxxxx
+---------  -------------- ---------- ---------- ------ -------- ------------
+TOTALES DE UNIDADES: xxxxxx
+TOTAl IMPORTE: xxxxxxxx
+---------  -------------- ---------- ---------- ------ -------- ------------
+
+	NUM COMPRA: xxxxxx   Nombre Almacén: xxxxxxxx  Fecha de compra: xxxxxxxxx
+CODARTI    DENOMINACION   CATEGORIA  UNIDADES   PVP   IMPORTE  STOCK-ACTUAL
+---------  -------------- ---------- ---------- ------ -------- ------------
+  xxxx        xxxxxxxxxx    xxxxxx     xxxxx     xxxx   xxxxxx    xxxxxxx
+  xxxx        xxxxxxxxxx    xxxxxx     xxxxx     xxxx   xxxxxx    xxxxxxx
+---------  -------------- ---------- ---------- ------ -------- ------------
+TOTALES DE UNIDADES: xxxxxx
+TOTAl IMPORTE: xxxxxxxx
+---------  -------------- ---------- ---------- ------ -------- ------------
+
+	NUM COMPRA: xxxxxx   Nombre Almacén: xxxxxxxx  Fecha de compra: xxxxxxxxx
+CODARTI    DENOMINACION   CATEGORIA  UNIDADES   PVP   IMPORTE  STOCK-ACTUAL
+---------  -------------- ---------- ---------- ------ -------- ------------
+  xxxx        xxxxxxxxxx    xxxxxx     xxxxx     xxxx   xxxxxx    xxxxxxx
+  xxxx        xxxxxxxxxx    xxxxxx     xxxxx     xxxx   xxxxxx    xxxxxxx
+---------  -------------- ---------- ---------- ------ -------- ------------
+TOTALES DE UNIDADES: xxxxxx
+TOTAl IMPORTE: xxxxxxxx
+---------  -------------- ---------- ---------- ------ -------- ------------
+
+Donde:
+IMPORTE = PVP * UNIDADES
+STOCK-ACTUAl = STOCK – UNIDADES
+
+
+*/
+
+
+DECLARE
+
+CURSOR C1 (COMP NUMBER) IS 
+    SELECT NUM_COMPRA, CODARTI, DENOMINACION, CATEGORIA, UNIDADES,
+    PVP, UNIDADES*PVP IMPORTE, STOCK-UNIDADES STOCKACTUAL
+    FROM ARTICULOS JOIN DET_COMPRAS USING (CODARTI)
+    JOIN COMPRAS USING (NUM_COMPRA)
+    WHERE NUM_COMPRA = COMP;
+CURSOR C2 IS SELECT NUM_COMPRA, NOMBRE, FECHA
+                FROM COMPRAS JOIN ALMACENES USING (CODALMA);
+REGCOMPRAS C2%ROWTYPE;
+TOTALUNI NUMBER(6):=0;
+TOTALIMP NUMBER(8,2):=0;
+REG C1%ROWTYPE;
+
+BEGIN
+OPEN C2;
+FETCH C2 INTO REGCOMPRAS;
+WHILE C2%FOUND LOOP
+  --VISUALIZAR LA COMPRA
+      DBMS_OUTPUT.PUT_LINE('----------  ---------  -------------- '||
+              '---------- ---------- ------ -------- ------------');
+      DBMS_OUTPUT.PUT_LINE(' NUM COMPRA'|| REGCOMPRAS.NUM_COMPRA ||
+               ' NOMBRE ALMACÉN: '  || REGCOMPRAS.NOMBRE ||
+               ' FECHA DE COMPRA: ' || REGCOMPRAS.FECHA);
+  OPEN C1(REGCOMPRAS.NUM_COMPRA);
+  FETCH C1 INTO REG;
+  -- COMPROBAMOS QUE LA COMPRA TIENE DETALLECOMPRAS
+  IF C1%NOTFOUND THEN   
+     DBMS_OUTPUT.PUT_LINE('LA COMPRA '|| REGCOMPRAS.NUM_COMPRA ||' NO TIENE ARTICULOS');
+  ELSE
+    -- TRATAMIENTO DEL DETALLE DE ESA COMPRA
+    -- VISUALIZAMOS LA CABECERA
+    DBMS_OUTPUT.PUT_LINE('NUM COMPRA CODARTI DENOMINACION '||
+               ' CATEGORIA  UNIDADES   PVP   IMPORTE STOCK-ACTUAL');
+    DBMS_OUTPUT.PUT_LINE('---------- ------- -------------- '||
+              '---------- ---------- ------ -------- ------------');
+    		TOTALUNI:=0;
+    		TOTALIMP:=0;
+    WHILE C1%FOUND LOOP
+       DBMS_OUTPUT.PUT_LINE(RPAD(TO_CHAR(REG.NUM_COMPRA),12)||
+             RPAD(TO_CHAR(REG.CODARTI),8)||
+             RPAD(REG.DENOMINACION,25)||
+             RPAD(REG.CATEGORIA,6)||
+             RPAD(TO_CHAR(REG.UNIDADES),9)||
+             RPAD(TO_CHAR(REG.PVP),9)||
+             RPAD(TO_CHAR(REG.IMPORTE),10)||
+             RPAD(TO_CHAR(REG.STOCKACTUAL),10));               
+       TOTALIMP := TOTALIMP + REG.IMPORTE;
+       TOTALUNI := TOTALUNI + REG.UNIDADES;
+       FETCH C1 INTO REG;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('----------  ---------  -------------- '||
+              '---------- ---------- ------ -------- ------------');
+    DBMS_OUTPUT.PUT_LINE('TOTALES DE UNIDADES: '|| TOTALUNI);
+    DBMS_OUTPUT.PUT_LINE('TOTAL IMPORTE: '||TOTALIMP);
+  END IF;
+  CLOSE C1;
+   FETCH C2 INTO REGCOMPRAS;
+END LOOP;
+END;
+
+
+

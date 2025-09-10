@@ -1,0 +1,180 @@
+
+
+/*1. Crear una función almacenada que reciba un número
+de almacén y que devuelva true si existe en la BD y false si no existe. 
+*/
+CREATE OR REPLACE FUNCTION EXISTE_ALMACEN(COD ALMACENES.CODALMA%TYPE) 
+    RETURN BOOLEAN IS
+CONT NUMBER(1):=0;
+BEGIN
+    SELECT COUNT(*) INTO CONT FROM ALMACENES 
+    WHERE CODALMA=COD;
+    
+    IF CONT>0 THEN 
+       RETURN TRUE;
+    ELSE 
+        RETURN FALSE;
+    END IF;
+END EXISTE_ALMACEN;
+
+/* 2. Realiza una procedure almacenada para insertar datos en la tabla 
+almacenes. La procedure recibe los datos del almacén. La procedure 
+hará uso de la función anterior para comprobar que existe el almacén.
+Si no existe el almacén se insertará un reg en la BD, pero antes hay 
+que comprobar que el nombre y la población sean distintas de null, 
+y que la facturación sea mayor que 0.
+Visualizar los mensajes que correspondan de lo que ocurra (almacén 
+ya existe, la población no puede ser nula, la facturación debe ser
+mayor que 0, etc ...). */
+
+CREATE OR REPLACE PROCEDURE INSERTAR_ALMACEN(COD ALMACENES.CODALMA%TYPE,
+                                             NOM ALMACENES.NOMBRE%TYPE,
+                                             POB ALMACENES.POBLACION%TYPE,
+                                             FAC ALMACENES.FACTURACION%TYPE) IS
+ERROR BOOLEAN:=FALSE;
+BEGIN
+    -- COMPROBAR SI EXISTE EL ALMACEN
+    IF EXISTE_ALMACEN(COD) THEN 
+        ERROR:=TRUE;
+        DBMS_OUTPUT.PUT_LINE('EL ALMACÉN EXISTE');
+    ELSE 
+        -- COMPROBAR LA LOCALIDAD
+        IF POB IS NULL OR POB='' THEN 
+            ERROR:=TRUE;
+            DBMS_OUTPUT.PUT_LINE('LA POBLACIÓN NO ES VÁLIDA');
+        END IF;
+        --COMPROBAR NOMBRE
+        IF NOM IS NULL OR NOM='' THEN 
+            ERROR:=TRUE;
+            DBMS_OUTPUT.PUT_LINE('EL NOMBRE NO ES VÁLIDO');
+        END IF;
+        -- FACTURACION
+        IF FAC<0 THEN 
+            ERROR:=TRUE;
+            DBMS_OUTPUT.PUT_LINE('LA FACTURACIÓN DEBE SER > 0');
+        END IF;
+        IF NOT ERROR THEN
+            INSERT INTO ALMACENES VALUES(COD, NOM, POB, FACT);
+            DBMS_OUTPUT.PUT_LINE('REGISTRO INSERTADO');
+        END IF;
+    END IF;
+END INSERTAR_ALMACEN;
+
+EXEC INSERTAR_ALMACEN(80,'PRUEBA 80','TALAVERA',1000);
+EXEC INSERTAR_ALMACEN(1,'PRUEBA 80','TALAVERA',1000);
+EXEC INSERTAR_ALMACEN(81,Null,'TALAVERA',1000);
+EXEC INSERTAR_ALMACEN(82,'PRUEBA 80',null,1000);
+EXEC INSERTAR_ALMACEN(83,'PRUEBA 80','TALAVERA',-10);
+
+/* 3.- Crear una función almacenada que reciba de parámetro un número
+de almacén y una subida de salario. La función deberá actualizar el 
+salario de los empleados de ese almacén y devolverá el número de 
+empleados
+ualizados. La actualización consistirá en sumar la subida al salario.
+*/
+CREATE OR REPLACE FUNCTION SUBE_SUELDO(COD EMPLEADOS.CODALMA%TYPE,
+                                       SUBIDA NUMBER) RETURN NUMBER IS
+BEGIN
+    UPDATE EMPLEADOS SET SALARIO=SALARIO+SUBIDA
+    WHERE CODALMA=COD;
+    RETURN SQL%ROWCOUNT;
+END SUBE_SUELDO;
+
+DECLARE
+  NUME NUMBER:=0;
+BEGIN
+    --DBMS_OUTPUT.PUT_LINE('SE HA MODIFICADO EL SUELDO DE: '||SUBE_SUELDO(2,200)||' EMPLEADOS');
+    NUME:=SUBE_SUELDO(2,200);
+    DBMS_OUTPUT.PUT_LINE('SE HA MODIFICADO EL SUELDO DE: '||NUME||' EMPLEADOS');
+END;
+
+/*4. Realizar una procedure almacenada que haga uso de esta función,
+y la función del ejercicio 1. La procedure recibe un número de almacén
+y una subida de salario. La procedure primero comprobará que el almacén
+exista, haciendo uso de la función del primer ejercicio. Si el almacén 
+existe ha de comprobar que la subida sea mayor que 0, si no es así no 
+se debe actualizar. Y si la subida es mayor que 0 se llamará a la función
+del apartado 3 pasándole el almacén y la subida.
+La procedure visualizará los mensajes de lo que ocurra. Almacén no existe,
+la subida es menor que 0, se han actualizado tantos empleados, etc..
+*/
+
+CREATE OR REPLACE PROCEDURE PROC_SUBE_SALARIO (COD ALMACENES.CODALMA%TYPE,
+                                               SUBIDA NUMBER) IS
+ACTUALIZADOS NUMBER;
+BEGIN
+    IF EXISTE_ALMACEN(COD) THEN
+        IF SUBIDA>0 THEN
+            ACTUALIZADOS:=SUBE_SUELDO(COD, SUBIDA);
+            DBMS_OUTPUT.PUT_LINE('EMPLEADOS ACTUALIZADOS '||ACTUALIZADOS);
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('LA SUBIDA NO ES VÁLIDA');
+        END IF;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('EL ALMACEN NO EXISTE');
+    END IF;
+END PROC_SUBE_SALARIO;
+
+EXEC PROC_SUBE_SALARIO(2,100);
+EXEC PROC_SUBE_SALARIO(90,100);
+EXEC PROC_SUBE_SALARIO(2,-1);
+
+/* 5. Crea una procedure almacenada que reciba un código de almacén y
+devuelva (parámetros OUT) su nombre, su población, el número de empleados 
+tiene, el número de compras que ha realizado, y el total importe de 
+todas sus compras. Esta procedure hará uso de la función del
+ejercicio 1 para comprobar si existe o no el almacén.
+Si el almacén no existe debe devolver en nombre la cadena 
+'ALMACÉN NO EXISTE', el resto de datos a 0 los numéricos y
+null las cadenas (excepto el nombre). 
+Realizar un bloque PL que haga uso de esta procedure,
+y visualice los datos devueltos (La procedure no debe visualizar nada).
+*/
+
+CREATE OR REPLACE PROCEDURE DATOS_ALMACEN(COD ALMACENES.CODALMA%TYPE,
+                                          NOM  ALMACENES.NOMBRE%TYPE,
+                                          POB  ALMACENES.POBLACION%TYPE,
+                                          NUMEMP  NUMBER,
+                                          NUMCOM  NUMBER,
+                                          IMP  NUMBER) IS 
+BEGIN
+    -- COMPROBAR QUE EL ALMACEN EXISTE
+    IF EXISTE_ALMACEN(COD) THEN 
+        -- POBLACION Y EL NOMBRE
+        SELECT NOMBRE, POBLACION INTO NOM, POB FROM ALMACENES
+        WHERE CODALMA=COD;
+        -- EMPLEADOS
+        SELECT COUNT(*) INTO NUMEMP FROM EMPLEADOS 
+        WHERE CODALMA=COD;
+        -- COMPRAS
+        SELECT COUNT(*) INTO NUMCOM FROM COMPRAS
+        WHERE CODALMA=COD;
+        -- IMPORTE TOTAL
+        SELECT SUM(PVP*UNIDADES) INTO IMP 
+        FROM ARTICULOS JOIN DET_COMPRAS 
+             USING(CODARTI) JOIN COMPRAS USING(NUM_COMPRA)
+        WHERE CODALMA=COD;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('EL ALMACEN NO EXISTE');
+        NOM:='ALMACEN NO EXISTE';
+        IMP:=0;
+        NUMEMP:=0;
+        NUMCOM:=0;
+        POB:=NULL;
+    END IF;
+END DATOS_ALMACEN;
+
+/* CÓDIGO PL SQL PARA PROBAR EL PROCEDIMIENTO */
+DECLARE
+    COD ALMACENES.CODALMA%TYPE;
+    NOM ALMACENES.NOMBRE%TYPE:=NULL;
+    POB ALMACENES.POBLACION%TYPE:=NULL;
+    NUMEMP NUMBER:=0;
+    NUMCOM NUMBER:=0;
+    IMP NUMBER:=0;
+BEGIN
+    DATOS_ALMACEN(2,NOM, POB, NUMEMP,NUMCOM, IMP);
+    DBMS_OUTPUT.PUT_LINE('NOMBRE '|| NOM ||
+                         'EMPLEADOS '||NUMEMP);
+END;
+

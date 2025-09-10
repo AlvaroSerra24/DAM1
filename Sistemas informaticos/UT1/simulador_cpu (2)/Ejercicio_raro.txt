@@ -1,0 +1,27 @@
+-Se carga en 50h
+-Primera instrucción 53h
+-Tenemos que pasar 2 valores 7 y 9
+-Funcionalidad:
+	-Carga 7 en R0
+	-Carga 9 en R1
+	-Suma R0+R1
+	-Almacena el resultado en [0100]
+	-Resta R1-R0 en [0101]
+	-R3=R0+R1+2
+0050 0053
+0007
+0009
+0100
+2007 (R0 vale 7)
+2109 (R1 vale 9
+2A01 (suma 0100 al R2)
+4101 (suma R0+R1 y lo guarda en el R4)
+1280 (el valor de R4 es guardado en el registro de R2)
+5280 (el R2 es incrementado en valor 1 su registro)
+4308 (resta R0-R1 y lo guarda en el R4)
+1280 (el valor de R4 es guardado en el registro de R2)
+40C1 (suma R0+R1 y lo guarda en R3)
+52C0 (se le incrimenta 1 a R3)
+52C0 (se le incrementa 1 a R3)
+
+	

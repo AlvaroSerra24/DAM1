@@ -1,0 +1,41 @@
+Pitline analytic
+base de datos F1
+recopilacion de datos, almacenamiento y gestion, análisis avanzado,
+desarrollo de software y app, servicio de consultoría
+
+2 servidores, 30 ordenadores y 8 sai
+
+Presupuesto 410.000€
+
+servidores
+https://www.dell.com/es-es/shop/servidores-almacenamiento-y-redes/smart-selection-poweredge-r6615-servidor-rack/spd/poweredge-r6615/per661501a?view=configurations&configurationid=12d80bee-ad70-4be9-a46b-562c967864db
+52.848,70€
+Básico - PowerEdge R6615 Server
+Smart Selection - Smart Selection PowerEdge R6615
+FRONT STORAGE - Chassis with up to 10x2.5" Drives 
+BACKPLANE - SAS/SATA/NVMe Capable Backplane 
+REAR STORAGE - No Rear Storage
+Trusted Platform Module - Trusted Platform Module 2.0 V3
+Configuración de chasis - 2.5" Chassis with up to 10 SAS4/SATA Drives including 4 Universal Slots, Front PERC 11 
+Procesador - AMD EPYC 9124 3.0GHz, 16C/32T, 64M Cache (200W) DDR5-4800
+Processor Thermal Configuration - High Performance Heatsink, V2
+Memory Configuration Type - Performance Optimized
+Memory DIMM Type and Speed - 4800MT/s RDIMMs
+Memoria - 1x32GB RDIMM, 4800MT/s Dual Rank 
+RAID - C4, RAID 5 for 3 or more HDDs or SSDs (Matching Type/Speed/Capacity) 
+Controlador RAID - PERC H755 with rear load Brackets
+Almacenamiento - 6x3.84TB SSD SATA 6Gbps ,Mixed Use, 512e 2.5in Hot-Plug, AG 
+Hard Drives (PCIe SSD/Flex Bay)- 4x15.36TB Enterprise NVMe Read Intensive AG Drive U.2 Gen4 with carrier 
+Fuente de alimentación - Single, Hot-plug, Power Supply Non-Redundant (1+0), 800W, Mixed Mode, NAF 
+Refrigeración térmica - 4 Very High Performance Fan for 1 CPU
+Cable de alimentación - Rack Power Cord 2M (C13/C14 10A) 
+PCIe Riser - Riser Config 3, 2 x16 FH (Gen5)
+Motherboard - PowerEdge R6615 Motherboard V2
+OCP 3.0 Network Adapters - Broadcom 57414 Dual Port 10/25GbE SFP28, OCP NIC 3.0 
+Additional Network Cards - Broadcom 5720 Dual Port 1GbE Optional LOM | Broadcom 57414 Dual Port 10/25GbE SFP28 Adapter, PCIe Full Height, V2 
+Fibre Channel Adapters - QLogic 2770 Single Port 32Gb Fibre Channel HBA, PCIe Full Height 
+Carcasa - Std Bezel for x8 /x10 Chassis, R6615 
+Boot Optimized Storage Cards - BOSS-N1 controller card + with 2 M.2 960GB (RAID 1)  
+
+RAM 32GB | Almacenamiento 2x85,04TB | 16 núcleos | 4 puerts Ethernet | 3 ranuras PCIe | con Windows Server 2022 Datacenter | Con capacidad para aumentar su RAM y Almacenamiento | Con garantia de al menos 4 años | Cumplimiento de eficiencia energética 
+Precio total de 211.394,80€

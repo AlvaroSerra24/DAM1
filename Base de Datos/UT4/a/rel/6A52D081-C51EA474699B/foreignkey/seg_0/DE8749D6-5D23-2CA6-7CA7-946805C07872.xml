@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="DE8749D6-5D23-2CA6-7CA7-946805C07872" containerWithKeyObject="67AF58B4-4BAF-9CA2-1DA4-4B37150723F4" localFKIndex="C5FD432B-CA98-36D5-05DC-C6371BB45A7E" name="CON_LOG_FK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>CON_LOG_FK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:10 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<referredTableLongName>VIDEOJUEGOS.LOGROS</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>38DB5CDE-E5AB-A5E5-EDF1-23504787C33C</referredTableID>
+<keyObject>C931DA16-B0DB-D28A-4567-302F52B560A1</keyObject>
+<referredKeyID>C931DA16-B0DB-D28A-4567-302F52B560A1</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>NUMERO,COD_JUEGO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

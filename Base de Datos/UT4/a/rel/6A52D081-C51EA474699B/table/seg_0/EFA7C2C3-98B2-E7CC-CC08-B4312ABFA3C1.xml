@@ -1,0 +1,86 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EFA7C2C3-98B2-E7CC-CC08-B4312ABFA3C1" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="COMPETICIONES">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>COMPETICIONES</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="COD_COMPETICIÓN" id="9A3891A8-9809-5AD5-C306-8329B0A10E3C">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>COMPETICIONES</sourceObjSchema>
+<sourceObjName>COD_COMPETICIÓN</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE" id="A85C8135-EBC4-5449-BD92-345E2153D5C5">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>COMPETICIONES</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHA_COMPETICIÓN" id="30D6B7EE-3EBB-2B0E-652C-B94104609E2E">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>COMPETICIONES</sourceObjSchema>
+<sourceObjName>FECHA_COMPETICIÓN</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F8C7E34A-128B-A98B-F296-3244F7AB3EBB" name="COM_COD_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>COM_COD_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9A3891A8-9809-5AD5-C306-8329B0A10E3C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B2FD54F5-6248-47A7-9DA2-A667EEDD779E" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="COM_COD_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>COM_COD_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:51:04 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9A3891A8-9809-5AD5-C306-8329B0A10E3C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

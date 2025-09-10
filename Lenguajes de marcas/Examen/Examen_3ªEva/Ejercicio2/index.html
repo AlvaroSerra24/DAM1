@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function calcSum(a, b) {
+            let suma = 0;/*Aqui le damos un valor numerico a la variable para indicar que es un numero*/
+            suma=(parseInt(a) + parseInt(b));/*Realizamos la suma*/
+            return suma;/*Aqui tenermos que cambiar la palabra devuelve para poner return y asi dicha funcion nos debuelva la suma*/
+        }
+
+        alert("Script: El usuario deberá introducir dos números. El programa deberá decir si el primer número es mayor, menor o igual que el segundo. Después mostrará la suma de ambos números por pantalla. ");
+
+        do{/*Introducimos un do while para que nos pregunte los dos numeros hasta que introduccamos nuemros*/
+            var num1 = prompt("Introduce un número entero");
+            var num2 = prompt("Introduce otro número entero");
+            if(!parseInt(num1) && !parseInt(num2)){
+                alert("Por favor, introduce números enteros válidos");
+            }
+        }while(!parseInt(num1) && !parseInt(num2));
+
+        parseInt(num1);
+        parseInt(num2);
+
+        if (num1 > num2) {/*Añadimos los alert para que se muestre el resultado de las comprobaciones sin necesidad de abrir la consola*/
+            alert("El primer número es mayor que el segundo");
+            console.log("El primer número es mayor que el segundo");
+        } else 
+        if (num1 == num2) {/*Tenemos que quitar el ! para que se cumpla cuando son iguales*/
+            alert("Los números son iguales");
+            console.log("Los números son iguales");
+        } else 
+        if (num2 > num1) { /*Falta un if para que se pueda coger la condicion, ademas cambiamos la condicion para que asi el mensaje que se muestra tenga sentido*/
+            alert("El segundo número es mayor que el primero");
+            console.log("El segundo número es mayor que el primero");
+        }
+
+        var resultado = calcSum(num1, num2);
+        alert("La suma de los números es: "+resultado);
+        console.log("La suma de los números es: "+resultado);/*Falta un + para que se imprima correctamente el mensaje*/
+    </script>
+</body>
+
+</html>

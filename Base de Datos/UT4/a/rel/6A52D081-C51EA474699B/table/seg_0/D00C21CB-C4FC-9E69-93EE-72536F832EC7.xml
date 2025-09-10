@@ -1,0 +1,145 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D00C21CB-C4FC-9E69-93EE-72536F832EC7" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="PARTICIPACIONES">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>PARTICIPACIONES</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="DNI" id="94A7BB1B-7418-56D1-D540-8CBB74E63066">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>PARTICIPACIONES</sourceObjSchema>
+<sourceObjName>DNI</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>9 BYTE</dataTypeSize>
+<ownDataTypeParameters>9 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="7B21E89F-AAED-82EA-74CD-6A9EEF411F1A" referredColumn="9F1DB69B-9FF5-E05C-58CE-491B79F83199"/>
+</associations>
+</Column>
+<Column name="COD_COMPETICIÓN" id="97C74E20-2732-37EA-AA89-403557C4B69B">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>PARTICIPACIONES</sourceObjSchema>
+<sourceObjName>COD_COMPETICIÓN</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5102A0C3-5F02-7DA2-0405-C7D9EAA6D38C" referredColumn="9A3891A8-9809-5AD5-C306-8329B0A10E3C"/>
+</associations>
+</Column>
+<Column name="COD_JUEGO" id="5BE442B5-71A5-45ED-AB53-FEEFF2CFFCF2">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>PARTICIPACIONES</sourceObjSchema>
+<sourceObjName>COD_JUEGO</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="37325581-E9E4-2674-9AF4-708EF658DB72" referredColumn="52A97EA1-5A93-B98C-660C-53EBCB2EC62A"/>
+</associations>
+</Column>
+<Column name="PUESTO" id="F8A67B81-CC01-DC57-52AF-413ABF70C2BE">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>PARTICIPACIONES</sourceObjSchema>
+<sourceObjName>PUESTO</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,3,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="8A18FDAF-AA71-434A-8C9F-716062280096" name="PAR_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>PAR_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="94A7BB1B-7418-56D1-D540-8CBB74E63066"/>
+<colUsage columnID="97C74E20-2732-37EA-AA89-403557C4B69B"/>
+<colUsage columnID="5BE442B5-71A5-45ED-AB53-FEEFF2CFFCF2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B0E62AAB-2C07-029F-33E4-3A92B29161F5" schemaObject="345738DD-F56D-FFE6-3BB7-56445BEC2198" name="PAR_PK">
+<sourceConnName>VIDEOJUEGOS</sourceConnName>
+<sourceObjSchema>VIDEOJUEGOS</sourceObjSchema>
+<sourceObjName>PAR_PK</sourceObjName>
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="94A7BB1B-7418-56D1-D540-8CBB74E63066"/>
+<colUsage columnID="97C74E20-2732-37EA-AA89-403557C4B69B"/>
+<colUsage columnID="5BE442B5-71A5-45ED-AB53-FEEFF2CFFCF2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D498F5A9-A8E6-7CE7-43BD-59866286D545" name="PAR_COM_FK">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="97C74E20-2732-37EA-AA89-403557C4B69B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9DA97D1B-DF13-B55E-DD52-5EA7BBD0076B" name="PAR_JUE_FK">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5BE442B5-71A5-45ED-AB53-FEEFF2CFFCF2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E37BCD73-F82C-D87D-0F25-A3F60A47FA51" name="PAR_JUG_FK">
+<createdBy>Vespertino</createdBy>
+<createdTime>2023-12-11 18:55:17 UTC</createdTime>
+<ownerDesignName>a</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="94A7BB1B-7418-56D1-D540-8CBB74E63066"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

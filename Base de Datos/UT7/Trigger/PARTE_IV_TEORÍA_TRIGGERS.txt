@@ -1,0 +1,633 @@
+/* TRIGGERS PL SQL, SON:
+- PROGRAMAS ALMACENADOS QUE SE EJECUTAN AUTOMÁTICAMENTE CON OPERACIONES
+DE INSERT/UPDATE/DELETE O CREATE/ALTER/DROP/CONNECT
+
+- EXISTEN TRES TIPOS:
+ * ASOCIADOS A TABLAS ->INSERT/UPDATE/DELETE EN UNA TABLA.
+ * ASOCIADOS A VISTAS -> INSERT/UPDATE/DELETE EN UNA VISTA.
+ * DISPARADORES DEL SISTEMA -> CREATE/ALTER/DROP/CONNECT EN EL SISTEMA.
+*/
+
+/**********  TRIGGERS ASOCIADOS A TABLAS  ************/
+/* 
+CREATE [OR REPLACE] TRIGGER NOMBRETRIGGER
+{BEFORE|AFTER}{DELETE|INSERT|UPDATE [OF <LISTA_COLUMNAS> ]}
+[OR { BEFORE|AFTER }   {DELETE|INSERT|UPDATE [OF <LISTA_COLUMNAS>] }] . . .
+ON NOMBRE_TABLA
+  [REFERENCING {OLD AS <NOMBREANT> | NEW AS <NOMBRENUEV> }]
+  [FOR EACH {STATEMENT | ROW [WHEN (CONDICIÓN)]}]
+DECLARE	-- opcional, si no hay que declarar variables no es necesario
+	<declaraciones>
+BEGIN
+	<acciones>
+EXCEPTION  	-- opcional, si no hay que controlar excepciones, no se pone
+	<gestión de excepciones>
+END; */
+
+/**       EJEMPLO TRIGGER A NIVEL DE TABLA
+Crear un trigger que se ejecute AL insertar un registro 
+en la tabla DEPART; el trigger insertará en la tabla TEM_DEPART una 
+fila donde podamos leer "Registro insertado"+fecha+usuario. 
+ */
+ 
+ -- CREAR TABAL TEM_DEPART
+ CREATE TABLE TEM_DEPART 
+ ( INFORMACION VARCHAR2(250)
+ );
+ 
+ -- CREAR EL TRIGGER
+CREATE OR REPLACE TRIGGER AUDITA_DEPART 
+           AFTER INSERT ON DEPART
+BEGIN
+    INSERT INTO TEM_DEPART VALUES ('REGISTRO INSERTADO POR '||
+                                    USER||'EL '||TO_CHAR(SYSDATE));
+END;
+
+-- PRUEBA
+INSERT INTO DEPART VALUES (1, 'PRUEBA 1','LOC 1');
+
+/*      EJEMPLO TRIGGER A NIVEL DE TABLA
+Crear un trigger que se ejecute AL insertar un registro 
+en la tabla DEPART; el trigger insertará en la tabla TEM_DEPART una 
+fila donde podamos leer "Registro insertado"+fecha+usuario+número de dpto
+y el nombre del dpto. 
+ */ 
+
+CREATE OR REPLACE TRIGGER AUDITA_DEPART_2 
+           AFTER INSERT ON DEPART FOR EACH ROW
+BEGIN
+    INSERT INTO TEM_DEPART VALUES ('REGISTRO INSERTADO POR '||
+                                    USER||'EL '||TO_CHAR(SYSDATE)||
+                                    '. Nº DPTO: ' ||:NEW.DEPT_NO ||
+                                    ', NOMBRE: ' ||:NEW.DNOMBRE);
+END;
+
+-- PRUEBAS
+INSERT INTO DEPART VALUES (2,'PRUEBA 2', 'LOC2');
+
+/* DESABILITAR TRIGGER */
+alter trigger AUDITA_DEPART disable;
+
+/* Crear un trigger que se dispare al insertar sobre la tabla de emp.
+   Si la comisión es nula asignamos el valor 100. 
+   Si el dpto no existe le asignamos al dpto 10
+*/
+
+CREATE OR REPLACE TRIGGER INSER_EMPLEADO 
+        BEFORE INSERT ON EMPLE FOR EACH ROW 
+DECLARE
+    CONT NUMBER(1):=0;
+    N_EMP NUMBER(4);
+BEGIN
+    IF :NEW.COMISION IS NULL THEN
+        :NEW.COMISION:=100;
+    END IF;
+    --SELECT COUNT(*) INTO CONT FROM DEPART WHERE :NEW.DEPT_NO=DEPT_NO;
+    --IF CONT<=0 THEN
+    IF NOT EXISTE_DPTO(:NEW.DEPT_NO) THEN 
+        :NEW.DEPT_NO:=10;
+    END IF;
+    
+    SELECT COUNT(*) INTO CONT FROM EMPLE WHERE :NEW.EMP_NO=EMP_NO;
+    IF CONT>0 THEN
+        SELECT MAX(EMP_NO) INTO N_EMP FROM EMPLE;
+        :NEW.EMM_NO:=N_EMP;
+    END IF;
+        
+    
+END;
+
+--PRUEBAS
+INSERT INTO EMPLE VALUES(11,'PRUEBA 11','VENDEDOR',11,SYSDATE,1000,100,1);
+INSERT INTO EMPLE VALUES(12,'PRUEBA 12','VENDEDOR',12,SYSDATE,1000,NULL,1);
+INSERT INTO EMPLE VALUES(13,'PRUEBA 13','VENDEDOR',13,SYSDATE,1000,100,99);
+INSERT INTO EMPLE VALUES(13,'PRUEBA 13','VENDEDOR',13,SYSDATE,1000,100,99);
+
+
+/* EJEMPLO MODIFICACIÓN:
+   Crear un trigger que se ejecute cuando se MODIFICA el oficio de un 
+   empleado. Si el oficio nuevo es VENDEDOR, asignarle una comisión de 200*/
+
+CREATE OR REPLACE TRIGGER MODIFICA_OFI_2 
+          AFTER UPDATE OF OFICIO ON EMPLE FOR EACH ROW
+          --WHEN (NEW.OFICIO='VENDEDOR')
+BEGIN
+    if (NEW.OFICIO='VENDEDOR') then
+    :NEW.COMISION:=200;
+    end if;
+END;
+
+-- PROBAR
+UPDATE EMPLE SET APELLIDO='VENDEDOR' WHERE EMP_NO=12;
+
+/*
+
+
+
+
+
+-- ANTES DE CREAR EL TRIGGER VAMOS A CREAR UNA NUEVA TABLA, TEM_DEPART.
+-- CREACIÓN DE LA TABLA TEM_DEPART:
+DROP TABLE TEM_DEPART;
+CREATE TABLE TEM_DEPART
+  (INFORMACION VARCHAR(250));
+
+-- CREAR EL TRIGGER
+CREATE OR REPLACE TRIGGER AUDITA_INSER_DEPART 
+    AFTER INSERT ON DEPART
+BEGIN
+    INSERT INTO TEM_DEPART VALUES ('Registro Insertado, USUARIO: '||USER||
+                                   ' FECHA: '||TO_CHAR(SYSDATE));
+END;
+
+-- PRUEBA 
+INSERT INTO DEPART VALUES(50,'INFORMATICA','TALAVERA');
+INSERT INTO DEPART VALUES(60,'GESTION','TALAVERA');
+INSERT INTO DEPART VALUES(70,'ADCION','TALAVERA');
+
+-- TRIGGER A NIVEL DE FILA
+/* Se pide que cada vez que se inserte un registro en DEPART se inserte en 
+la tabla TEM_DEPART una fila indicando la fecha, el usuario, que se ha
+insertado un registro en DEPART, el número de departamento y el nombre. 
+En este caso utilizaremos los valores :new, que  contienen los datos
+del nuevo registro a insertar. */
+CREATE OR REPLACE TRIGGER AUDITA_INSERT_2_DEPART
+    AFTER INSERT ON DEPART FOR EACH ROW
+BEGIN
+    INSERT INTO TEM_DEPART VALUES('INSERTADO REGISTRO, USUARIO ' || USER ||
+                          'FECHA '||SYSDATE||
+                          'NUMERO DPTO: '||:NEW.DEPT_NO||
+                          'NOMBRE DPTO: '||:NEW.DNOMBRE);
+END;
+
+-- PROBARLO
+INSERT INTO DEPART VALUES(80,'DPTO 80','TALA');
+
+/* PAG 4. Crear un trigger que se dispare cuando se inserte en la tabla 
+emple.
+?	Si la comisión es nula asignarla el valor 100.
+?	Si el departamento no existe en la tabla DEPART,
+asignar el departamento 10. */
+
+CREATE OR REPLACE TRIGGER INSERT_EMPLE 
+         BEFORE INSERT ON EMPLE FOR EACH ROW
+DECLARE
+   NUM_DPTO DEPART.DEPT_NO%TYPE;
+BEGIN
+-- COMISION
+    IF :NEW.COMISION IS NULL
+        THEN :NEW.COMISION:=100;
+    END IF;
+--DPTO EXISTE
+    SELECT DEPT_NO INTO NUM_DPTO FROM DEPART WHERE DEPT_NO=:NEW.DEPT_NO;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        :NEW.DEPT_NO:=10;
+END;
+
+-- PROBARLO
+INSERT INTO EMPLE VALUES(1,'AMOR','VENDEDOR',1,SYSDATE,1000,100,20);
+ 
+INSERT INTO EMPLE VALUES(2,'AMOR2','VENDEDOR',1,SYSDATE,1000,NULL,20);
+INSERT INTO EMPLE VALUES(4,'AMOR4','VENDEDOR',1,SYSDATE,1000,100,90);
+
+/*Crear un trigger que se ejecute cuando se actualice el OFICIO de 
+un empleado. 
+Si el oficio nuevo es VENDEDOR, asignarle una comisión de 200. */
+
+CREATE OR REPLACE TRIGGER ACTUALIZA_OFICIO 
+         BEFORE UPDATE OF OFICIO ON EMPLE FOR EACH ROW 
+BEGIN
+    IF UPPER(:NEW.OFICIO)='VENDEDOR' THEN
+        :NEW.COMISION:=200;
+    END IF;
+END;
+
+-- SE PUEDE IMPLEMENTAR MEDIANTE EL WHEN EN LA CABECERA
+CREATE OR REPLACE TRIGGER ACTUALIZA_OFICIO 
+         BEFORE UPDATE OF OFICIO ON EMPLE FOR EACH ROW 
+         WHEN UPPER(:NEW.OFICIO)='VENDEDOR'
+BEGIN
+  :NEW.COMISION:=200;
+END;
+
+-- PROBAR
+UPDATE EMPLE SET OFICIO='VENDEDOR' WHERE EMP_NO=1;
+
+/* ACTIVAR Y DESACTIVAR TRIGGER */
+ALTER TRIGGER nombre_trigger {ENABLE|DISABLE|COMPILE}
+-- PROBAR
+ALTER TRIGGER ACTUALIZA_OFICIO DISABLE;
+UPDATE EMPLE SET OFICIO='VENDEDOR' WHERE EMP_NO=3;
+
+/* ELIMINAR TRIGGER */
+DROP TRIGGER nombre_trigger;
+
+
+/* TRIGGER QUE MUESTRE EL REGISTRO ANTIGUO Y EL NUEVO AL HACER UN UPDATE
+SOBRE LA TABLA DEPART */
+
+
+
+
+DROP TABLE TEM_DEPART;
+CREATE TABLE TEM_DEPART  
+ (INFORMACION  VARCHAR2(250));
+
+--CREACIÓN DEL TRIGGER ALMACENADO:
+CREATE OR REPLACE TRIGGER AUDIT_INSERT_DEPART AFTER INSERT ON DEPART
+BEGIN
+INSERT INTO TEM_DEPART VALUES ('SE HA INSERTADO UN REGISTRO, USUARIO: '||USER||' , FECHA: '||TO_CHAR(SYSDATE));
+END;
+
+--PRUEBA:
+INSERT INTO DEPART VALUES (12, '11111', '1111');
+
+/* SE INSERTA UN REGISTRO:
+EN LA TABLE TEM_DEPART SE INSERTARÁ UN REGISTRO:*/
+SELECT * FROM TEM_DEPART;
+
+--SE INSERTAN VARIOS REGISTROS EN DEPART:
+INSERT INTO DEPART VALUES (13, 'prueba13', 'loc13');
+INSERT INTO DEPART VALUES (14, 'prueba14', 'loc14');
+INSERT INTO DEPART VALUES (15, 'prueba15', 'loc15');
+
+/* TENDREMOS UN INSERT EN TEM_DEPART POR REGISTRO */
+SELECT * FROM TEM_DEPART;
+
+/**** TRIGGER A NIVEL DE FILA ******/
+/* EJEMPLO 1:
+Cada vez que se inserte un registro en DEPART se inserte en la tabla
+TEM_DEPART una fila indicando la fecha y el usuario que ha insertado
+un registro en DEPART, el número de departamento y el nombre. 
+En este caso utilizaremos los valores :new, que  contienen los datos 
+del nuevo registro a insertar.*/
+CREATE OR REPLACE TRIGGER AUDIT_INSERT2_DEPART  
+AFTER INSERT ON DEPART FOR EACH ROW
+BEGIN
+INSERT INTO 
+   TEM_DEPART VALUES ('SE HA INSERTADO UN REGISTRO, USUARIO: '||USER||' , 
+                       FECHA: '||TO_CHAR(SYSDATE)|| 
+                       '. EL NÚMERO DEPARTAMENTO INSERTADO ES: '||TO_CHAR(:NEW.DEPT_NO)|| 
+                       ', Y EL NOMBRE ES : '||:NEW.DNOMBRE);
+END;
+
+/* LO PROBAMOS CON EL SIGUIENTE INSERT */
+INSERT INTO DEPART VALUES (16, 'prueba16', 'loc16');
+
+/* PARA VER EL CONTENIDO DE LA TABLA TEM_DEPART */
+SELECT * FROM TEM_DEPART;
+
+/* INSERTAMOS VARIOS REGISTROS */
+--SE INSERTAN VARIOS REGISTROS EN DEPART:
+INSERT INTO DEPART VALUES (17, 'prueba17', 'loc17');
+INSERT INTO DEPART VALUES (18, 'prueba18', 'loc18');
+INSERT INTO DEPART VALUES (19, 'prueba19', 'loc19');
+
+/* SE MIRA LO QUE HAY */
+SELECT * FROM TEMP_DEPART;
+
+/* EJEMPLO 2 :
+Crear un trigger que se dispare cuando se inserte en la tabla emple.
+?	Si la comisión es nula asignarla el valor 100.
+?	Si el departamento no existe en la tabla DEPART, asignar el 
+departamento 10. */
+
+CREATE OR REPLACE TRIGGER INSER_EMPLE BEFORE INSERT ON EMPLE FOR EACH ROW
+DECLARE
+  D NUMBER(2);
+BEGIN
+   IF :NEW.COMISION IS NULL THEN 
+:NEW.COMISION := 100;
+   END IF;
+   SELECT DEPT_NO INTO D FROM DEPART WHERE DEPT_NO=:NEW.DEPT_NO;
+   DBMS_OUTPUT.PUT_LINE('REG OK.');
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    :NEW.DEPT_NO:=10;
+    DBMS_OUTPUT.PUT_LINE('DEP ASIGNADO 10.');
+  WHEN TOO_MANY_ROWS THEN
+    NULL;
+END;
+
+/* PARA PROBAR INSERTAMOS UN EMPLEADO CON DPTO QUE NO EXISTE Y UNA COMISIÓN NULA */
+INSERT INTO EMPLE   VALUES(1,'LOPEZ','VENDEDOR', 1, SYSDATE, 111,NULL,33);
+SELECT * FROM EMPLE;
+
+
+/*
+EJEMPLO DE 3 (MODIFICACIÓN)
+
+Crear un trigger que se ejecute cuando se actualice el OFICIO 
+de un empleado. Si el oficio nuevo es VENDEDOR, asignarle una comisión
+de 200. */
+
+CREATE OR REPLACE TRIGGER OFIVENDEDOR BEFORE UPDATE OF OFICIO 
+ ON EMPLE FOR EACH ROW
+ WHEN (UPPER(NEW.OFICIO) = 'VENDEDOR')
+BEGIN
+   :NEW.COMISION:=200;
+END;
+
+-- PRUEBAS:
+SELECT * FROM EMPLE;
+UPDATE EMPLE SET OFICIO = 'VENDEDOR' WHERE EMP_NO = 1;
+SELECT * FROM EMPLE;
+UPDATE EMPLE SET OFICIO = 'VENDEDOR' WHERE EMP_NO = 1133;
+
+/*Podemos observar como el trigger ha sido creado para cuando se
+modifica el campo oficio, en el caso de que se modifique otro campo,
+el disparador no se activará. */
+
+/* ORDEN DE EJECUCIÓN DE LOS DISPARADORES.
+Cuando una tabla lleva asociados varios disparadores, 
+el orden de ejecución es el siguiente:
+?	Antes de comenzar a ejecutar la orden
+ 	BEFORE  ….. FOR EACH STATEMENT
+?	Para cada fila afectada por la orden
+1.	Se ejecuta BEFORE  ….. FOR EACH ROWS
+2.	Se ejecuta INSERT, UPDATE o DELETE. Se bloquea la fila hasta confirmar la transacción.
+3.	Se ejecuta AFTER ….. FOR EACH ROWS
+?	Después de actualizar se ejecutan los disparadores 
+ 		AFTER  ….. FOR EACH STATEMENT
+*/
+
+/* ACTIVAR Y DESACTIVAR TRIGGER */
+
+ALTER TRIGGER nombretrigger {ENABLE | DISABLE | COMPILE }
+
+/* ELIMINAR TRIGGER */
+
+Para eliminar un trigger:
+    DROP TRIGGER NOMBRETRIGGER;
+    
+/* EJEMPLOS: */
+/* Crear un trigger que se dispare cuando insertemos en la tabla 
+emple, de tal forma que simplemente tiene que visualizar un mensaje. */
+
+CREATE OR REPLACE TRIGGER INSEREMPLE AFTER INSERT ON EMPLE FOR EACH ROW
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('REG EMPLE INSERTADO');
+END;
+
+/* PRUEBAS */
+INSERT INTO EMPLE ( EMP_NO, APELLIDO, OFICIO, DIR, FECHA_ALT, SALARIO, COMISION, DEPT_NO )
+VALUES  ( 1122, 'RAMOS', 'VENDEDOR', 1, SYSDATE, 1000, 1000, 10);
+
+SELECT * FROM EMPLE;
+INSERT  INTO EMPLE  SELECT * FROM EMPLE;
+SELECT * FROM EMPLE;
+
+/* EJEMPLO:
+Realiza un trigger que se lance cuando se realice un update en la tabla
+de departamentos.
+Utilizamos :old y :new y for each row
+*/
+/* prueba UPDATE */
+CREATE OR REPLACE TRIGGER UPDATE_DPTO AFTER UPDATE ON DEPART FOR EACH ROW
+
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('REG ANTIGUO: (' || :OLD.DEPT_NO||','
+                                         || :OLD.DNOMBRE||','
+                                         || :OLD.LOC||')');
+                                         
+   DBMS_OUTPUT.PUT_LINE('REG NUEVO: (' || :NEW.DEPT_NO||','
+                                         || :NEW.DNOMBRE||','
+                                         || :NEW.LOC||')');                   
+END;
+/* PRUEBA CON INSERT */
+CREATE OR REPLACE TRIGGER INSERT_DPTO AFTER INSERT ON DEPART FOR EACH ROW
+
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('REG ANTIGUO: (' || :OLD.DEPT_NO||','
+                                         || :OLD.DNOMBRE||','
+                                         || :OLD.LOC||')');
+                                         
+   DBMS_OUTPUT.PUT_LINE('REG NUEVO: (' || :NEW.DEPT_NO||','
+                                         || :NEW.DNOMBRE||','
+                                         || :NEW.LOC||')');                   
+END;
+
+/* PRUEBA CON DELETE */
+CREATE OR REPLACE TRIGGER DELETE_DPTO AFTER DELETE ON DEPART FOR EACH ROW
+
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('REG ANTIGUO: (' || :OLD.DEPT_NO||','
+                                         || :OLD.DNOMBRE||','
+                                         || :OLD.LOC||')');
+                                         
+   DBMS_OUTPUT.PUT_LINE('REG NUEVO: (' || :NEW.DEPT_NO||','
+                                         || :NEW.DNOMBRE||','
+                                         || :NEW.LOC||')');                   
+END;
+
+-- PRUEBAS PARA LOS TRIGGERS ANTERIORES
+UPDATE DEPART SET DNOMBRE='PRUEVA UPDATE' WHERE DEPT_NO=30;
+INSERT INTO DEPART VALUES(1,'PRUEBA 1','TALAVERA');
+DELETE FROM DEPART WHERE DEPT_NO=1;
+
+
+/* cREAR UN trigger que guarde en la tabla TEMP las actualizaciones de MÁS
+DE 100 E en el salario de la tabla de empleados. Mostrar el apellido, el 
+sueldo antiguo y el sueldo nuevo */
+
+-- CREAR TABLA TEMPORAL
+CREATE TABLE TEMP 
+  (APELLIDO VARCHAR(10),
+   SUELDO_ANTERIOR NUMBER(7,0),
+   SUELDO_NUEVO NUMBER(7,0));
+   
+CREATE OR REPLACE TRIGGER SUBE_SALARIO 
+    AFTER UPDATE OF SALARIO ON EMPLE FOR EACH ROW
+BEGIN
+    IF :NEW.SALARIO>:OLD.SALARIO+100 THEN 
+        INSERT INTO TEMP VALUES(:OLD.APELLIDO,:OLD.SALARIO,:NEW.SALARIO);
+    END IF;
+END;
+  
+-- PRUEBAS
+UPDATE EMPLE SET SALARIO=1101 WHERE EMP_NO=1;
+UPDATE EMPLE SET SALARIO=1102 WHERE EMP_NO=1;
+UPDATE EMPLE SET COMISION=10 WHERE EMP_NO=1;
+
+
+/* Crear un disparador que se ejecute cada vez que se haga inser, update, delete
+sobre dptos. Hay que crear una tabla "Audita_depart" que va a almacenar el 
+num_dpto, la operación realizada (i,d,u), el nombre del usuario que la
+ha realizado y la fecha. */
+
+CREATE TABLE AUDITA_DEPART(
+    DEPT_NO NUMBER(2),
+    OPERACION VARCHAR2(1),
+    USU VARCHAR2(20),
+    FECHA DATE);
+
+CREATE OR REPLACE TRIGGER AUDITAR_DPTO 
+       AFTER INSERT OR UPDATE OR DELETE ON DEPART FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        INSERT INTO AUDITA_DEPART VALUES(:NEW.DEPT_NO,'I',USER,SYSDATE);
+    ELSIF DELETING THEN 
+        INSERT INTO AUDITA_DEPART VALUES(:OLD.DEPT_NO,'D',USER,SYSDATE);
+    ELSE
+        INSERT INTO AUDITA_DEPART VALUES(:NEW.DETP_NO,'U',USER,SYSDATE);
+    END IF;
+END;
+
+INSERT INTO DEPART VALUES(1,'PRUEBA 1','TALAVERA');
+UPDATE DEPART SET DNOMBRE='CAMBIO' WHERE DEPT_NO=1;
+DELETE FROM DEPART WHERE DEPT_NO=1;
+
+CREATE OR REPLACE TRIGGER INSEREMPLE  AFTER INSERT ON EMPLE  FOR EACH ROW
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('REG EMPLE INSERTADO');
+   DBMS_OUTPUT.PUT_LINE('NUMERO EMPLE:'||:NEW.EMP_NO);
+  DBMS_OUTPUT.PUT_LINE('APELLIDO: '||:NEW.APELLIDO);
+  DBMS_OUTPUT.PUT_LINE('OFICIO: '||:NEW.OFICIO);
+  DBMS_OUTPUT.PUT_LINE('FECHA_ALTA: '||:NEW.FECHA_ALT);
+  DBMS_OUTPUT.PUT_LINE('SALARIO :'||:NEW.SALARIO);
+  DBMS_OUTPUT.PUT_LINE('NUM DEPART :'||:NEW.DEPT_NO);
+END;
+
+/* PRUEBAS */
+INSERT INTO EMPLE   (  EMP_NO,   APELLIDO,   OFICIO,   DIR,   FECHA_ALT,   SALARIO,
+    COMISION,   DEPT_NO  )
+  VALUES   ( 1133, 'RAMOS', 'VENDEDOR', 1, SYSDATE, 1000, 1000, 10);
+
+INSERT  INTO EMPLE  SELECT * FROM EMPLE;
+SELECT * FROM EMPLE;
+
+/* OTRO EJEMPLO:
+Crear un trigger que guarde en la tabla TEMP las actualizaciones de 
+más de 100 € en el salario de la tabla EMPLE. 
+Guardaremos el apellido antiguo, el sueldo antiguo y el nuevo sueldo.*/
+-- CREAMOS LA TABLA TEMP
+DROP TABLE TEMP;
+CREATE TABLE TEMP  
+ (EMPLE  VARCHAR2(15),
+  SUCESO VARCHAR2(20),
+  SUELDO_ANTE NUMBER(9,2), 
+  SUELDO_NUE NUMBER(9,2));
+
+-- CREAMOS EL TRIGGER
+CREATE OR REPLACE TRIGGER AUDIT_SUBE_SUELDO 
+        AFTER UPDATE OF SALARIO ON EMPLE
+ FOR EACH ROW
+ WHEN ((NEW.SALARIO - OLD.SALARIO) > 100)
+BEGIN
+INSERT INTO TEMP VALUES (:OLD.APELLIDO,'SUBIDA SUELDO', :OLD.SALARIO, :NEW.SALARIO);
+END;
+
+-- PRUEBAS: subimos el salario 101€ a los empleados del departamento 10, 
+
+UPDATE EMPLE SET SALARIO=SALARIO+101 WHERE DEPT_NO=10;
+
+SELECT * FROM TEMP;
+
+/*	INSERTING - UPDATING - DELETING
+Cuando un mismo trigger pueda ser disparado por distintas operaciones
+o eventos de disparo utilizaremos or para separar los eventos y
+para tratar cada situación podremos utilizar inserting, deleting 
+y updating dependiendo de la operación, ejemplo: */
+CREATE OR REPLACE TRIGGER Cambios_DEPART   AFTER INSERT OR DELETE OR UPDATE ON EMPLE 
+. . . . . . .
+DECLARE
+  . . . . . . . . .
+BEGIN
+IF INSERTING THEN
+  . . . . . . .
+ELSIF UPDATING THEN
+       . . . . .. . .
+     ELSIF UPDATING(‘SALARIO’) THEN
+         . . . . . .
+        ELSIF DELETING THEN
+           . . . . . . . 
+END IF;
+ . . . . . . .
+END;   
+
+/*** EJEMPLOS: 
+ Crear un disparador que se ejecute cada vez que se haga un insert, 
+update o delete sobre la tabla depart. Guardaremos en audita_depart 
+el número de departamento, la operación realizada (i,u,d), el nombre , 
+el usuario que realiza la operación y la fecha */
+CREATE TABLE AUDITA_DEPART 
+  (DEPT_NO NUMBER(2), 
+   OPERACION VARCHAR2(1),
+   NOMBRE VARCHAR2(14),
+   USUARIO VARCHAR2(14),
+   FECHA    DATE  );
+
+/* TRIGGER */
+CREATE OR REPLACE TRIGGER AUDITDEPART 
+       AFTER INSERT OR UPDATE OR DELETE ON DEPART FOR EACH ROW
+BEGIN
+  IF INSERTING THEN
+     INSERT INTO AUDITA_DEPART VALUES (:NEW.DEPT_NO, 'I', :NEW.DNOMBRE, USER, SYSDATE);
+  ELSIF DELETING THEN
+     INSERT INTO AUDITA_DEPART VALUES (:OLD.DEPT_NO, 'D', :OLD.DNOMBRE, USER, SYSDATE);
+  ELSE
+   -- UPDATING
+    INSERT INTO AUDITA_DEPART VALUES (:OLD.DEPT_NO, 'U', :OLD.DNOMBRE, USER, SYSDATE);
+  END IF;       
+END;
+
+/* PRUEBA CON INSERT */
+INSERT INTO DEPART (DEPT_NO,    DNOMBRE,    LOC,    NUM_EMPLE)
+  VALUES ( 60,'DEP60','TALAVERA',0  );
+  
+SELECT * FROM AUDITA_DEPART;
+
+/* PRUEBA CON DELETE */
+DELETE DEPART WHERE DEPT_NO = 45;
+SELECT * FROM AUDITA_DEPART;
+
+/* PRUEBA CON UPDATE */
+UPDATE DEPART SET DNOMBRE = 'NUEVO' WHERE DEPT_NO = 42;
+
+SELECT * FROM AUDITA_DEPART;
+
+/* EJEMPLO: Crear un disparador que se ejecute cuando se actualice en 
+la tabla depart. Se deben visualizar por pantalla sólo las columnas 
+que se actualizan */
+CREATE OR REPLACE TRIGGER VERCAMBIOSDEPAR 
+        AFTER UPDATE ON DEPART FOR EACH ROW
+BEGIN
+ IF UPDATING('DEPT_NO') THEN
+     DBMS_OUTPUT.PUT_LINE ('NÚMERO DEPAR CAMBIA:'|| 
+     ' NUEVO =' || :NEW.DEPT_NO ||', ANTIGUO = '|| :OLD.DEPT_NO);
+  END IF;
+  IF UPDATING('DNOMBRE') THEN
+     DBMS_OUTPUT.PUT_LINE ('NOMBRE DEP CAMBIA:'|| 
+     ' NUEVO =' || :NEW.DNOMBRE ||', ANTIGUO = '|| :OLD.DNOMBRE);
+  END IF;
+  IF UPDATING('LOC') THEN
+     DBMS_OUTPUT.PUT_LINE ('LOCALIDAD DEP CAMBIA:'|| 
+     ' NUEVO =' || :NEW.LOC ||', ANTIGUO = '|| :OLD.LOC);
+  END IF;
+END;
+
+-- PRUEBAS
+UPDATE DEPART SET DNOMBRE='CAMBIO' WHERE DEPT_NO=40;
+UPDATE DEPART SET DNOMBRE='NUEVONOM', LOC='NUEVA' WHERE DEPT_NO=40;
+UPDATE DEPART SET DNOMBRE='NUEV3', LOC='NUEVA3', DEPT_NO = 81 WHERE DEPT_NO=40;
+
+/* MISMO TRIGGER PERO DISTINTA SOLUCION */
+
+CREATE OR REPLACE TRIGGER VERCAMBIOSDEPAR 
+      AFTER UPDATE ON DEPART FOR EACH ROW
+BEGIN
+  IF :NEW.DEPT_NO != :OLD.DEPT_NO THEN
+     DBMS_OUTPUT.PUT_LINE ('NÚMERO DEPAR CAMBIA:'|| 
+     ' NUEVO =' || :NEW.DEPT_NO ||', ANTIGUO = '|| :OLD.DEPT_NO);
+  END IF;
+  IF :NEW.DNOMBRE != :OLD.DNOMBRE THEN
+     DBMS_OUTPUT.PUT_LINE ('NOMBRE DEP CAMBIA:'|| 
+     ' NUEVO =' || :NEW.DNOMBRE ||', ANTIGUO = '|| :OLD.DNOMBRE);
+  END IF;
+  IF :NEW.LOC != :OLD.LOC THEN
+     DBMS_OUTPUT.PUT_LINE ('LOCALIDAD DEP CAMBIA:'|| 
+     ' NUEVO =' || :NEW.LOC ||', ANTIGUO = '|| :OLD.LOC);
+  END IF;
+END;
+

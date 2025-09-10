@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Faltaba un signo de interrogacion al final, la palabra encoding estaba mal escrita 
+y habia un espacio tras el primer signo de interrogacion-->
+
+<vehiculo>
+    <terrestres>
+        <vehiculo>bicicleta</vehiculo>
+        <vehiculo>coche</vehiculo>
+        <vehiculo>tractor</vehiculo>
+    </terrestres>
+    <!--Le faltaba una etiqueta de cierre y todos los campos estaban mal el escritos a la hora de cerrarlos-->
+    <acuaticos>
+        <vehiculo>canoa</vehiculo>
+    </acuaticos>
+    <!--Le faltaba una etiqueta de cierre y todos los campos estaban mal el escritos a la hora de cerrarlos-->
+    <aereos>
+        <vehiculo>avioneta</vehiculo>
+        <vehiculo>helicóptero</vehiculo>
+    </aereos>
+    <!--Le faltaba una etiqueta de cierre y todos los campos estaban mal el escritos a la hora de cerrarlos-->
+</vehiculo>
+<!--Faltaba una etiqueta comun para todo los vehiculos-->

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concatenado</title>
+</head>
+<body>
+    <script>
+        let cadena=null;
+        let falso;
+        do{
+           if(falso=confirm("¿Quieres escribir?")){
+            let palabra = prompt("Escribe una palabra");
+            if(cadena==null){
+                cadena=palabra
+            }else{
+                cadena=cadena+"-"+palabra;
+            }
+           }else
+           alert(cadena)
+        }while(falso != false);
+    </script>
+</body>
+</html>

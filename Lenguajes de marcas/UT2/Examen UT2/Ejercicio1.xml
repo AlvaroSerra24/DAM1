@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<empresa>
+    <departamento>
+        <nombre>Seguridad</nombre>
+        <ciudad>Madrid</ciudad>
+        <jefe></jefe>
+        <empleado>
+            <nombre>Lucas</nombre>
+            <puesto></puesto>
+            <sueldo>1700€</sueldo>
+        </empleado>
+    </departamento>
+    <departamento>
+        <nombre>Recursos humanos</nombre>
+        <ciudad>Talavera de la Reina</ciudad>
+        <jefe></jefe>
+        <empleado>
+            <nombre>Carlos</nombre>
+            <puesto></puesto>
+            <sueldo>1700€</sueldo>
+        </empleado>
+    </departamento>
+</empresa>

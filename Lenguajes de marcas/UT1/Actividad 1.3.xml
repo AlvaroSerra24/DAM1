@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<agenda>
+	<!--Vamos a crear un contacto-->
+	<contactos>
+		<nombre>Alumno</nombre>
+		<ciudad cp="15500">Ciudad Real</ciudad>
+        <!--Los dos nombres eran distinto ya que el primero empezaba por 
+        mayusculas y el cierre no llevaba mayuscula-->
+		<teléfono n="612345678"/>
+		<email>alumno@gmail.com</email>
+		<casado v="no"/>
+        <!--Al final de la linea de codigo no estaba cerrado por 
+        lo que faltaba un simbolo para poder cerrarlo-->
+		<AsignaturaPreferida>Matemáticas</AsignaturaPreferida>
+        <!--El simbolo @ evitava que los simbolos &lt no abriera un elemnto y al final no 
+        habia ningun tipo de elemento para poder cerrarlo-->
+	</contactos>
+</agenda>

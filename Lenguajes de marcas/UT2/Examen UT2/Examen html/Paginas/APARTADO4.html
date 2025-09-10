@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APARTADO4</title>
+    <link rel="stylesheet" href="../Estilo/estilos.css">
+</head>
+<body>
+    <header>
+        <h1>Contacto</h1>
+        <form name="Formulario de contacto"><!--Crear un formulario-->
+            <fieldset name="Formulario de contacto"><legend>Formulario de contacto</legend>
+                <label for="nombre">Nombre(*)</label>
+                <input name="nombre" type="text" value="" required placeholder="Escribe tu nombre"><br><!--Cajas para rellenar con texto-->
+                <br>
+                <label for="Email">Email(*)</label>
+                <input name="Email" type="email" value="" required="@" placeholder="Escribe tu Email"><br><!--Caja para rellenar con email-->
+                <br>
+                <label for="Telefono">Telefono</label>
+                <input name="Telefono" type="number" value="" placeholder="Escribe tu teléfono" min="9" max="9"><br>
+                <br>
+                <label for="Sitio web">Sitio web</label>
+                <input name="Sitio web" type="url" value="" placeholder="Escribe la URL de tu web"><br><!--Caja para rellenar con una url-->
+                <br>
+                <label for="Asunto">Asunto(*)</label>
+                <input name="Asunto" type="text" value="" required placeholder="Escribe un asunto"><br>
+                <br>
+                <label for="Mensaje">Mensaje(*)</label>
+                <textarea name="Mensaje" id="Mensaje" cols="20" rows="2" required placeholder="Deja aquí tu comentario..."></textarea><br><!--Caja para rellenar con mucho texto-->
+                <br>
+                <input type="button" value="Enviar" src="Enviar.html"><input type="reset" value="Borrar todo"><!--Botones para enviar el formulario y para borrarlo-->   
+            </fieldset>
+        </form>
+        <p><a href="../Index.html">Volver al index</a></p>
+    </header>
+    <footer>
+        <p>Este es el footer de la página</p>
+        <p><strong>Alumno: Álvaro Serradilla Otero</strong></p>
+        <p>1ºDAM</p>
+    </footer>
+</body>
+</html>

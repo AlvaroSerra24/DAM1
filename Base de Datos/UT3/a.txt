@@ -1,0 +1,7 @@
+1ªFN -> Eliminar atributos multivalor y grupos repetitivos.
+
+
+
+
+2ªFN -> Que todos los atributos secundarios dependan parcial o totalmente de la clave primaria.
+3ªFN -> Que no hay dependencias entre los secundarios.

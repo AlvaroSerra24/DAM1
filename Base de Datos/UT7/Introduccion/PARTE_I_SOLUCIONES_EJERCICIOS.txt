@@ -1,0 +1,419 @@
+SET SERVEROUTPUT ON 
+SET VERIFY OFF
+
+/*1. Realizar un bloque PL para insertar registros en la tabla SUMINISTROS.
+El código de proveedor y de artículo leerlo de teclado.
+Comprobar todos los posibles errores:
+?	Que no exista el artículo
+?	Que no exista el proveedor
+?	Que exista ese proveedor con ese artículo. */
+
+DECLARE
+  ca SUMINISTROS.CODARTI%TYPE;
+  cp SUMINISTROS.CODPROV%TYPE;
+  na NUMBER(1):=0;
+  np NUMBER(1):=0;
+  vale boolean:=true; -- Para controlar la inserción. 
+  
+BEGIN
+  -- LEER EL PROVEEDOR
+    cp:=&codigo_proveedor;
+    select count(*) into np from proveedores where codprov=cp;
+    if np=0 then
+        DBMS_OUTPUT.PUT_LINE('El proveedor no existe');
+        vale:=false; --No debemos realizar la inserción. 
+    end if;
+   -- LEER UN CODIGO ARTICULO
+    ca:=&codigo_articulo;
+    select count(*) into na from articulos where codarti=ca;
+    if na=0 then
+       DBMS_OUTPUT.PUT_LINE('codigo articulo erroneo');
+       vale:=false; --No debemos realizar la inserción. 
+    end if;
+  
+     if vale then
+        insert into suministros values(cp, ca);
+        DBMS_OUTPUT.PUT_LINE('REGISTRO INSERTADO: ('||cp||','||ca||')');
+    end if;
+   EXCEPTION
+    WHEN DUP_VAL_ON_INDEX THEN
+     DBMS_OUTPUT.PUT_LINE('REGISTRO DUPLICADO');
+    WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('SE HA PRODUCIDO UN ERROR INDETERMINADO');
+END;
+
+/*  IMAGINAD QUE QUEREMOS CONTROLAR ANTES DE HACER LA INSERCIÓN, QUE EL VALOR DEL 
+    PROVEEDOR
+    Y DEL ARTÍCULO SEA CORRECTO Y SE NOS OCURRE METER LAS SENTENCIAS EN UN BUCLE. 
+    --> NO FUNCIONA!! NO SE PUEDE HACER ASÍ.
+    En PL/SQL, cuando se lee de teclado, las instrucciones de tipo cp:=&cod_proveedor, 
+    son interpretadas como un 'paso de parámetro' lo que quiere decir que se ejecutan UNA
+    SOLA VEZ Y antes de todas las instrucciones del bloque de pl/sql (porque son 
+    parámetros).*/
+DECLARE
+  ca SUMINISTROS.CODARTI%TYPE;
+  cp SUMINISTROS.CODPROV%TYPE;
+  na NUMBER(1):=0;
+  np NUMBER(1):=0;
+BEGIN
+  -- LEER EL PROVEEDOR HASTA QUE SEA CORRECTO
+    While (np=0) loop
+        cp:=&codigo_proveedor;
+        select count(*) into np from proveedores where codprov=cp;
+        if np=0 then
+            DBMS_OUTPUT.PUT_LINE('El proveedor '||to_char(cp)||'no existe');
+        end if;
+    end loop;
+   -- LEER UN CODIGO ARTICULO
+     While (na=0) loop
+        ca:=&codigo_articulo;
+        select count(*) into na from articulos where codarti=ca;
+        if na=0 then
+            DBMS_OUTPUT.PUT_LINE('El articulo '||to_char(ca)||'no existe');
+        end if;
+    end loop;
+     
+    insert into suministros values(cp, ca);
+    DBMS_OUTPUT.PUT_LINE('REGISTRO INSERTADO: ('||cp||','||ca||')');
+   
+   EXCEPTION
+    WHEN DUP_VAL_ON_INDEX THEN
+      DBMS_OUTPUT.PUT_LINE('REGISTRO DUPLICADO');
+    WHEN OTHERS THEN   
+      DBMS_OUTPUT.PUT_LINE('SE HE PRODUCIDO UN ERRO EN LA OPERACIÓN');
+END;
+
+/* INTENTAMOS SOLUCIONARLO CON ANIDANDO IF-ELSE...TAMPOCO FUNCIONARÁ.Las instruciones 
+con & son interpretadas como parámetros y se ejecuan antes del código Y SOLO UNA VEZ.   */
+
+DECLARE
+  ca SUMINISTROS.CODARTI%TYPE;
+  cp SUMINISTROS.CODPROV%TYPE;
+  na NUMBER(1):=0;
+  np NUMBER(1):=0;
+  vale boolean:=true; -- Para controlar la inserción. 
+  
+BEGIN
+  -- LEER EL PROVEEDOR
+    cp:=&codigo_proveedor;
+    select count(*) into np from proveedores where codprov=cp;
+    if np=0 then
+        DBMS_OUTPUT.PUT_LINE('PROVEEDOR '||cp||' no existe');
+        vale:=false;
+    else 
+        ca:=&codigo_articulo;
+        select count(*) into na from articulos where codarti=ca;
+        if na=0 then
+            DBMS_OUTPUT.PUT_LINE('ARTICULO '||ca||' no existe');
+            vale:=false;
+        end if;
+    end if;
+    if vale then
+        insert into suministros values(cp, ca);
+        DBMS_OUTPUT.PUT_LINE('REGISTRO INSERTADO: ('||cp||','||ca||')');
+    end if;
+   
+   EXCEPTION
+    WHEN DUP_VAL_ON_INDEX THEN
+      DBMS_OUTPUT.PUT_LINE('REGISTRO DUPLICADO');
+    WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('SE HE PRODUCIDO UN ERRO EN LA OPERACIÓN');
+END;
+
+
+/*
+2.	Realizar un bloque PL para insertar registros en la tabla ARTICULOS. 
+Leer de teclado DENOMINACIÓN, CATEGORÍA y PRECIO. Insertar un artículo 
+en la tabla ARTICULOS, teniendo en cuenta:
+?	El código de artículo será el valor máximo del código actual más 1.
+?	El stock debe ser la media de stock de los artículos suministrados
+por proveedores de la zona CENTRO.
+?	El precio Tecleado tiene que ser > 0.
+?	La categoría debe ser A, B o C.
+?	Visualizar todos los mensajes de error que ocurran. */
+
+ACCEPT denom PROMPT 'Introduce nombre artículo: ';
+ACCEPT cat PROMPT 'Introduce categoría: ';
+ACCEPT pvp NUMBER FORMAT '9999.99' PROMPT 'Introduce precio: ';
+
+DECLARE 
+    a_denom ARTICULOS.DENOMINACION%TYPE;
+    a_cat ARTICULOS.CATEGORIA%TYPE;
+    a_pvp ARTICULOS.PVP%TYPE;
+    a_codigo ARTICULOS.CODARTI%TYPE;
+    a_stock ARTICULOS.STOCK%TYPE;
+    VALE BOOLEAN:=TRUE;
+BEGIN
+    a_denom:='&denom';
+    a_cat:='&cat';
+    a_pvp:=&pvp;
+    -- comprobat categoría
+    IF UPPER(a_cat) NOT IN ('A','B','C') THEN 
+        VALE:=FALSE;
+        DBMS_OUTPUT.PUT_LINE('CATEGORÍA INCORRECTA');
+    END IF;
+    -- comprobar precio+
+    IF a_pvp <= 0 THEN
+       VALE:=FALSE;
+       DBMS_OUTPUT.PUT_LINE('PRECIO DEBE SER > 0');
+    END IF;
+    
+    IF VALE THEN 
+       -- buscamos codigo articulo
+       SELECT (MAX(CODARTI)+1) INTO a_codigo FROM ARTICULOS;
+       -- buscar el stock
+       SELECT (AVG(STOCK)) INTO a_stock 
+       FROM PROVEEDORES JOIN SUMINISTROS 
+       USING(CODPROV) JOIN ARTICULOS 
+       USING(CODARTI)
+       WHERE UPPER(TRIM(ZONA)) LIKE 'CENTRO';
+       
+       INSERT INTO ARTICULOS VALUES 
+           (a_codigo,a_denom,a_cat,a_pvp, a_stock);
+       COMMIT;
+       DBMS_OUTPUT.PUT_LINE('ARTICULO INSERTADO');
+    END IF;
+  
+    EXCEPTION 
+        WHEN OTHERS THEN 
+            DBMS_OUTPUT.PUT_LINE('ERROR INDETERMINADO');
+END;
+ 
+ /* 3.	Leer de teclado la subida, la categoría y el código de almacén.
+?	Hacer un bloque PL, que actualice el stock de los artículos de una categoría 
+leída, y que sean comprados por el almacén leído.
+?	La actualización consiste en sumar la subida al stock.
+?	Comprobar que el almacén exista.
+?	Comprobar que la subida sea >0
+?	Comprobar que la categoría se A, B, C
+?	Visualizar todos los mensajes de error.
+*/
+DECLARE
+    subida NUMBER(5);
+    cat ARTICULOS.CATEGORIA%TYPE;
+    cod_alma ALMACENES.CODALMA%TYPE;
+    correcto BOOLEAN:=TRUE;
+    na NUMBER(1):=0;
+BEGIN
+    cod_alma:='&codigo_almacen';
+    cat:='&categoria_articulo';
+    subida:='&subida_stock';
+  
+    /* COMPROBAMOS LA CATEGORIA */
+    IF cat NOT IN ('A','B','C') THEN 
+       correcto:=FALSE;
+       DBMS_OUTPUT.PUT_LINE('LA CATEGORÍA NO ES VÁLIDA');
+    END IF;
+    
+    -- COMPROBAMOS LA SUBIDA
+    IF subida<=0 THEN 
+       correcto:=FALSE;
+       DBMS_OUTPUT.PUT_LINE('LA SUBIDA DEBE SER >0');
+    END IF;
+    
+    /* COMPROBAMOS QUE EL ALMACÉN EXISTA */
+    SELECT COUNT(*) INTO na FROM ALMACENES WHERE CODALMA=cod_alma;
+    IF na=0 THEN 
+        DBMS_OUTPUT.PUT_LINE('EL ALMACEN NO EXISTE');
+        correcto:=FALSE;
+    END IF;
+    
+    /* SI ES CORRECTO LA SUBIDA, ALMACEN Y CATEGORÍA, HAGO LA MODIFICACIÓN */
+    IF correcto=TRUE THEN 
+        UPDATE ARTICULOS SET STOCK=STOCK+SUBIDA
+        WHERE CATEGORIA=cat AND CODARTI IN 
+          (SELECT CODARTI 
+           FROM DET_COMPRAS JOIN COMPRAS USING (NUM_COMPRA)
+           WHERE CODALMA=cod_alma);
+        COMMIT;
+        IF SQL%ROWCOUNT=0 THEN 
+          DBMS_OUTPUT.PUT_LINE('El almacén no ha realizado ninguna venta');
+        ELSE
+           DBMS_OUTPUT.PUT_LINE('Se han modificado '||SQL%ROWCOUNT||' registros');
+        END IF;
+    END IF;            
+    
+    EXCEPTION
+        WHEN OTHERS THEN
+           DBMS_OUTPUT.PUT_LINE('SE HA PRODUCIDO UN ERROR INDETERMINADO');
+END;
+
+/* EJERCICIO 4	Realizar un bloque PL para insertar datos en la 
+tabla DET_COMPRAS se leen de teclado NUM_COMPRA, CODARTI, UNIDADES.
+Antes de insertar comprobar:
+?	Que el NUM_COMPRA + CODARTI no exista en la tabla DET_COMPRAS, 
+comprobar error de clave duplicada.
+?	Si no existe NUM_COMPRA + CODARTI, comprobar que exista el num_compra.
+Comprobar que exista el Codarti. 
+Comprobar que unidades sean >0. Y grabar.
+?	No se insertará si existe NUM_COMPRA + CODARTI. O si el num_compra
+no existe en COMPRA. O si el codarti no existe en ARTICULOS. O cuando 
+unidades<=0.
+*/
+
+/* solución 1: contando que existan los códigos */
+DECLARE
+    C_ARTI ARTICULOS.CODARTI%TYPE;
+    N_COMPRA COMPRAS.NUM_COMPRA%TYPE;
+    UNI DET_COMPRAS.UNIDADES%TYPE;
+    CORRECTO BOOLEAN:=TRUE;
+    
+    NCA NUMBER(1):=0;
+    NNC NUMBER(1):=0;
+BEGIN
+    C_ARTI:='&codigo_articulo';
+    N_COMPRA:='&numero_compra';
+    UNI:='&UNIDADES';
+    
+    /* COMPROBAR QUE EL ARTÍCULO EXISTE */
+    SELECT  count(CODARTI) INTO NCA FROM ARTICULOS WHERE CODARTI=C_ARTI;
+    IF NCA=0 THEN
+        DBMS_OUTPUT.PUT_LINE('ARTICULO INEXITENTE');
+        CORRECTO:=FALSE;
+    END IF;
+    
+    /* QUE EXISTA EL PEDIDO EN COMPRAS */
+    SELECT COUNT(NUM_COMPRA) INTO NNC FROM COMPRAS WHERE NUM_COMPRA=N_COMPRA;
+    IF NNC=0 THEN
+        DBMS_OUTPUT.PUT_LINE('EL PEDIDO NO EXISTE');
+        CORRECTO:=FALSE;
+    END IF;
+    
+    /* COMPROBAR UNIDADES */
+    IF UNI<=0 THEN
+       CORRECTO:=FALSE;
+       DBMS_OUTPUT.PUT_LINE('LAS UNIDADES DEBEN SER >0');
+    END IF;    
+    
+    IF CORRECTO=TRUE THEN
+        INSERT INTO DET_COMPRAS VALUES(N_COMPRA,C_ARTI, UNI);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('REGISTRO INSeRTADO:(COMPRA:'||N_COMPRA||
+                              ', ARTÍCULO: '||C_ARTI||', UNIDADES: '||
+                              UNI||')');
+    END IF;
+    
+    EXCEPTION 
+       WHEN DUP_VAL_ON_INDEX THEN
+          DBMS_OUTPUT.PUT_LINE('EL REGISTRO YA EXISTE');
+       WHEN OTHERS THEN
+          DBMS_OUTPUT.PUT_LINE('ERROR INDETERMINADO');
+END;
+
+/* SOLUCIÓN 2: LOS BLOQUES DE PL/SQL SE PUEDEN ANIDAR COMO VIMOS EN LA TEORÍA -->
+  UN BLOQUE DE PL POR CONSULTA PARA CAPTURAR LA EXCEPTIÓN DE QUE NO EXISTAN 
+  REGISTROS */
+DECLARE
+    C_ARTI ARTICULOS.CODARTI%TYPE;
+    N_COMPRA COMPRAS.NUM_COMPRA%TYPE;
+    UNI DET_COMPRAS.UNIDADES%TYPE;
+    CA ARTICULOS.CODARTI%TYPE;
+    NC COMPRAS.NUM_COMPRA%TYPE;
+    CORRECTO BOOLEAN:=TRUE;
+BEGIN
+    C_ARTI:='&codigo_articulo';
+    N_COMPRA:='&numero_compra';
+    UNI:='&UNIDADES';
+    
+    /* COMPROBAR QUE EL ARTÍCULO EXISTE */
+    BEGIN
+        SELECT CODARTI INTO CA FROM ARTICULOS
+        WHERE CODARTI=C_ARTI;
+        
+        EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+               DBMS_OUTPUT.PUT_LINE('ARTICULO INEXITENTE');
+               CORRECTO:=FALSE;
+    END;
+    
+    /* QUE EXISTA EL PEDIDO EN COMPRAS */
+    BEGIN
+        SELECT NUM_COMPRA INTO NC FROM COMPRAS
+            WHERE NUM_COMPRA=N_COMPRA;
+            EXCEPTION
+                WHEN NO_DATA_FOUND THEN
+                   DBMS_OUTPUT.PUT_LINE('EL PEDIDO NO EXISTE');
+                   CORRECTO:=FALSE;
+    END;
+    
+    /* COMPROBAR UNIDADES */
+    IF UNI<0 THEN
+       CORRECTO:=FALSE;
+       DBMS_OUTPUT.PUT_LINE('LAS UNIDADES DEBEN SER >0');
+    END IF;    
+    
+    IF CORRECTO=TRUE THEN
+        INSERT INTO DET_COMPRAS VALUES(N_COMPRA,C_ARTI, UNI);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('REGISTRO INSRTADO:(COMPRA:'||N_COMPRA||
+                              ', ARTÍCULO: '||C_ARTI||', UNIDADES: '||
+                              UNI||')');
+    END IF;
+    
+    EXCEPTION 
+       WHEN DUP_VAL_ON_INDEX THEN
+          DBMS_OUTPUT.PUT_LINE('EL REGISTRO YA EXISTE');
+      WHEN OTHERS THEN
+          DBMS_OUTPUT.PUT_LINE('ERROR INDETERMINADO');
+END;
+
+ 
+ 
+/* solución 3: UN SOLO BLOQUE */
+DECLARE
+    C_ARTI ARTICULOS.CODARTI%TYPE;
+    N_COMPRA COMPRAS.NUM_COMPRA%TYPE;
+    UNI DET_COMPRAS.UNIDADES%TYPE;
+    CA ARTICULOS.CODARTI%TYPE;
+    NC COMPRAS.NUM_COMPRA%TYPE;
+    CORRECTO BOOLEAN:=TRUE;
+BEGIN
+    C_ARTI:='&codigo_articulo';
+    N_COMPRA:='&numero_compra';
+    UNI:='&UNIDADES';
+    
+    /* COMPROBAR QUE EL ARTÍCULO EXISTE */
+    
+    SELECT CODARTI INTO CA FROM ARTICULOS
+    WHERE CODARTI=C_ARTI;
+        
+      
+    /* QUE EXISTA EL PEDIDO EN COMPRAS */
+    SELECT NUM_COMPRA INTO NC FROM COMPRAS
+    WHERE NUM_COMPRA=N_COMPRA;
+                 
+    /* COMPROBAR UNIDADES */
+    IF UNI<0 THEN
+       CORRECTO:=FALSE;
+       DBMS_OUTPUT.PUT_LINE('LAS UNIDADES DEBEN SER >0');
+    END IF;    
+    
+    IF CORRECTO=TRUE THEN
+        INSERT INTO DET_COMPRAS VALUES(N_COMPRA,C_ARTI, UNI);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('REGISTRO INSRTADO:(COMPRA:'||N_COMPRA||
+                              ', ARTÍCULO: '||C_ARTI||', UNIDADES: '||
+                              UNI||')');
+    END IF;
+    
+    EXCEPTION 
+       WHEN NO_DATA_FOUND THEN 
+            DBMS_OUTPUT.PUT_LINE('ARTICULO O NUM COMPRA INEXISTENTE');  
+       WHEN DUP_VAL_ON_INDEX THEN
+            DBMS_OUTPUT.PUT_LINE('EL REGISTRO YA EXISTE');
+      WHEN OTHERS THEN
+         DBMS_OUTPUT.PUT_LINE('ERROR INDETERMINADO');
+END;
+
+ 
+/* EJERCICIOS 
+   A. MOSTRAR TODOS LOS NÚMEROS PRIMOS DEL 1 AL 100.
+   B. MOSTRAR TODOS LOS NÚMEROS PARES ENTRE UN NÚMERO INICIO Y UN NÚMERO FIN SOLICITADO
+      AL USUARIO POR TECLADO (POR PARÁMETRO).
+   C. SOLICITAR TRES NÚMEROS POR TECLADO Y ORDENARLOS DE MAYOR A MENOR. 
+   D. SOLICITRA TRES NÚMEROS POR TECLADO Y UN MÉTODO DE ORDENACIÓN (ASC ó DESC) Y ORDENAR-
+       LOS DEPENDIENDO DE LA OPCIÓN INTRODUCIDA. 
+        */
+       
+       
+ 

@@ -1,0 +1,24 @@
+
+Table JUGADORES creado.
+
+
+Table CUENTAS creado.
+
+
+Table JUEGOS creado.
+
+
+Table CUENTAS_TIENEN_JUEGOS creado.
+
+
+Table LOGROS creado.
+
+
+Table CUENTAS_CONSIGUEN_LOGROS creado.
+
+
+Table COMPETICIÓN creado.
+
+
+Table PARTICIPACIONES creado.
+
