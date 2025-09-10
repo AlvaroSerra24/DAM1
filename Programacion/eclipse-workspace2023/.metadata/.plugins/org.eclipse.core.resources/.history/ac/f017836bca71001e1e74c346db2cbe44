@@ -1,0 +1,138 @@
+package Ejercicio;
+
+import java.util.Scanner;
+
+public class Ejercicio {
+	
+	
+	public static void imprimirMenu() {
+		System.out.println("Elige una opcion: ");
+		System.out.println("a. Son numeros amigos?");
+		System.out.println("b. ¿Cuantos primos hay entre ambos?");
+		System.out.println("c. Imprimir las cifras de a");
+		System.out.println("d. Sumar las cifras de b");
+		System.out.println("e. Salir");
+	}
+	
+	public static void sonAmigos(int num1, int num2) {
+		
+		int sumaDivNum1 = 0;
+		int sumaDivNum2 = 0;
+		for (int i = 1; i < num1; i++) {
+			if(num1 % i == 0) {
+				sumaDivNum1 += i;
+			}
+		}
+		for (int i = 1; i < num2; i++) {
+			if(num2 % i == 0) {
+				sumaDivNum2 += i;
+			}
+		}
+		if (sumaDivNum1 == num2) {
+			System.out.println("El numero " + num1 + " es amigo de " + num2);
+		}else if(sumaDivNum2 == num1) {
+			System.out.println("El numero " + num2 + " es amigo de " + num1);
+		}else {
+			System.out.println(num1 + " y " + num2 + " no son amigos");
+		}
+	}
+	public static boolean esPrimo(int num) {
+		if (num <= 1) {
+	        return false;
+	    }
+		for (int i = 2; i < num; i++) {
+			if(num % i == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static void sonPrimos(int num1, int num2) {
+		int contadorPrimos = 0;
+		if (num1 > num2) {
+			for (int i = num2 + 1; i < num1; i++) {
+				if (esPrimo(i)) {
+					contadorPrimos++;
+				}
+			}
+			
+			System.out.println("Hay " + contadorPrimos + " numeros primos entre " + num2 + " y " + num1);
+		}
+		if (num2 > num1) {
+			for (int i = num1 + 1; i < num2; i++) {
+				if (esPrimo(i) == true) {
+					contadorPrimos++;
+				}
+			}
+			System.out.println("Hay " + contadorPrimos + " n�nmeros primos entre " + num1 + " y " + num2);
+		}
+	}
+	
+	public static void imprimirCifras (int num) {
+		int cifra;
+		while (num > 0) {
+			cifra = num % 10;
+			System.out.println(cifra);
+			num /= 10;
+		}
+	}
+	
+	public static void sumarCifras(int num) {
+		int cifra;
+		int sumaCifras = 0;
+		int numOriginal = num;
+		while (num > 0) {
+			cifra = num % 10;
+			sumaCifras += cifra;
+			num /= 10;
+		}
+		System.out.println("La suma de las cifras del numero " + numOriginal + " es " + sumaCifras);
+	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		String opcion = "";
+		
+		int a = 0;
+		int b = 0;
+		
+		do {
+			imprimirMenu();
+			opcion = sc.next();
+			
+			switch (opcion){
+			case "a":
+				System.out.println("Dame dos numeros (a y b) y te dire si son amigos");
+				a = sc.nextInt();
+				b = sc.nextInt();
+				sonAmigos(a, b);
+				System.out.println("");
+				break;
+			case "b":
+				System.out.println("Dame dos n�mero (a y b) y te dire cuantos primos hay entre ellos");
+				a = sc.nextInt();
+				b = sc.nextInt();
+				sonPrimos(a, b);
+				System.out.println("");
+				break;
+			case "c":
+				System.out.println("Dame un numero (a) y te sacara las cifras");
+				a = sc.nextInt();
+				imprimirCifras(a);
+				System.out.println("");
+				break;
+			case "d":
+				System.out.println("Dame un numero (b) y te sumare las cifras");
+				b = sc.nextInt();
+				sumarCifras(b);
+				System.out.println("");
+			}
+			
+		}while(!opcion.equals("e")); 
+		sc.close();
+		System.out.println("Programa finalizado :)");
+		
+	}
+
+}

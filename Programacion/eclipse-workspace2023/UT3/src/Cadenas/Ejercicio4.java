@@ -1,0 +1,24 @@
+package Cadenas;
+
+import java.util.Scanner;
+
+public class Ejercicio4 {
+	
+	public static void main(String[] args) {
+		//Palindromo
+		Scanner sc=new Scanner(System.in);	
+		System.out.println("Dame una palabra: ");
+		String palabra=sc.next();
+		String nuevo="";
+		for(int i=palabra.length()-1;i>=0;i--)
+			nuevo=nuevo+palabra.charAt(i);
+		System.out.println(nuevo);
+		sc.close();
+		if(nuevo.equalsIgnoreCase(palabra)) {
+			System.out.println("Es un palíndromo");
+		}
+		else {
+			System.out.println("No es un palíndromo");
+		}
+	}
+}

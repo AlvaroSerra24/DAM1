@@ -1,0 +1,12 @@
+package Cadenas;
+
+public class Cadenas {
+	public static void main(String[] args) {
+		String palabra="Hola";
+		String palabra2=new String("Hola");
+		//Letras que componen el String
+		for(int i=0; i<palabra.length();i++) {
+			System.out.println(palabra.charAt(i));//palabra[i]
+		}
+	}
+}

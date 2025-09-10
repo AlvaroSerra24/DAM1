@@ -1,0 +1,62 @@
+[
+  {
+    "name": "The Lord of the Rings",
+    "author": "J.R.R._Tolkien",
+    "year": "1954",
+    "pages": 1178
+  },
+  {
+    "name": "Harry Potter and the Philosopher's Stone",
+    "author": "J.K._Rowling",
+    "year": "1997",
+    "pages": 223
+  },
+  {
+    "name": "A Game of Thrones",
+    "author": "George_R.R._Martin",
+    "year": "1996",
+    "pages": 694
+  },
+  {
+    "name": "The Chronicles of Narnia",
+    "author": "C.S._Lewis",
+    "year": "1950",
+    "pages": 752
+  },
+  {
+    "name": "The Hobbit",
+    "author": "J.R.R._Tolkien",
+    "year": "1937",
+    "pages": 310
+  },
+  {
+    "name": "Harry Potter and the Chamber of Secrets",
+    "author": "J.K._Rowling",
+    "year": "1998",
+    "pages": 251
+  },
+  {
+    "name": "The Name of the Wind",
+    "author": "Patrick_Rothfuss",
+    "year": "2007",
+    "pages": 662
+  },
+  {
+    "name": "Harry Potter and the Prisoner of Azkaban",
+    "author": "J.K._Rowling",
+    "year": "1999",
+    "pages": 317
+  },
+  {
+    "name": "The Way of Kings",
+    "author": "Brandon_Sanderson",
+    "year": "2010",
+    "pages": 1007
+  },
+  {
+    "name": "Harry Potter and the Goblet of Fire",
+    "author": "J.K._Rowling",
+    "year": "2000",
+    "pages": 636
+  }
+]

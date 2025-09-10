@@ -1,0 +1,5 @@
+***********************************IES RIBERA DEL TAJO*********************************
+Rafael Ramos
+	Bases de Datos:8
+	Entornos de Desarrollo:9
+La nota media es: 8.5

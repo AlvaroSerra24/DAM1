@@ -1,0 +1,126 @@
+package examen;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.*;
+
+
+public class BDExamen {
+	private static BDExamen miInstancia=null;
+	private static boolean permitirInstanciaNueva;
+	private Connection conn;
+	private Statement stmt;
+	private String cadenaConexion;//driver@servidor:puerto:sid
+	private String usuario;
+	private String pass;
+	
+	
+	
+	public BDExamen() throws Exception {
+		if(!permitirInstanciaNueva) {
+			throw new Exception("No se puede crear otro objeto. Usa getInstance()");
+		}
+	}
+	public static BDExamen getInstance() {
+		if(miInstancia==null) {
+			permitirInstanciaNueva=true;
+			try {
+				miInstancia=new BDExamen();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			permitirInstanciaNueva=false;
+		}
+		
+		return miInstancia;
+	}
+	
+	public Connection getConn() {
+		return conn;
+	}
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
+	public Statement getStmt() {
+		return stmt;
+	}
+	public void setStmt(Statement stmt) {
+		this.stmt = stmt;
+	}
+	public String getCadenaConexion() {
+		return cadenaConexion;
+	}
+	public void setCadenaConexion(String cadenaConexion) {
+		this.cadenaConexion = cadenaConexion;
+	}
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	
+	public ResultSet consultaBD(String consulta) {
+		ResultSet rset=null;
+		try {
+			this.conn=DriverManager.getConnection(this.cadenaConexion,this.usuario,this.pass);
+			this.stmt=conn.createStatement();
+			rset=stmt.executeQuery(consulta);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return rset;
+	}
+	
+	public void cerrarConsulta() {
+		try {
+			this.stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void cargarParametrosConexionJson(String filename) {
+		JSONParser parser=new JSONParser();
+		
+			try {
+				Object obj=parser.parse(new FileReader(filename));
+				JSONObject json=(JSONObject)obj;
+
+				//this.cadenaConexion=(String)json.get("DRIVER");
+				this.cadenaConexion=this.cadenaConexion+(String)json.get("SERVIDOR");
+				this.cadenaConexion=this.cadenaConexion+(String)json.get("PUERTO");
+				this.cadenaConexion=this.cadenaConexion+(String)json.get("SID");
+				this.usuario=(String)json.get("USUARIO");
+				this.pass=(String)json.get("CLAVE");
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
+}

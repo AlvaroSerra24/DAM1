@@ -1,0 +1,31 @@
+package examen;
+
+import java.util.ArrayList;
+
+public class Guia extends Persona {
+	private String titulacion;
+	private int añosExperiencia;
+	private ArrayList<Turista> turistas;
+	
+	public Guia(String id, String nombre, String apellidos, String titulacion, int añosExperiencia,
+			ArrayList<Turista> turistas) {
+		super(id, nombre, apellidos);
+		this.titulacion = titulacion;
+		this.añosExperiencia = añosExperiencia;
+		this.turistas = turistas;
+	}
+	
+	public Guia(String id, String nombre, String apellidos, String titulacion, int añosExperiencia) {
+		super(id, nombre, apellidos);
+		this.titulacion = titulacion;
+		this.añosExperiencia = añosExperiencia;
+		this.turistas = new ArrayList<Turista>();
+	}
+	
+	public Guia() {
+		super();
+		this.titulacion = "";
+		this.añosExperiencia = 0;
+		this.turistas = new ArrayList<Turista>();
+	}
+}

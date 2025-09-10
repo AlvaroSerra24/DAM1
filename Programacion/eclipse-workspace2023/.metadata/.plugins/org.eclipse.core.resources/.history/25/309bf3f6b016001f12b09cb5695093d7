@@ -1,0 +1,8 @@
+package examen;
+
+public class Visita {
+	private String codigo;
+	private int horaVisita;
+	private String idioma;
+	private double precio;
+}

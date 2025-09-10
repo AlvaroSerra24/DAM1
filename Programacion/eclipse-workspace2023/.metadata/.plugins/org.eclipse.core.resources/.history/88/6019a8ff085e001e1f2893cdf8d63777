@@ -1,0 +1,18 @@
+package bucles;
+
+public class EjemploWhile {
+	
+	public static void main(String[] args) throws InterruptedException {
+		//Bucle While
+		//System.out.println("0");
+		//System.out.println("1");
+		//System.out.println("2");
+		
+		int i=0;//iterador del bucle con cu inicial
+		while(i<=20) {
+			System.out.println(i);
+			i++;//i=i+1
+			Thread.sleep(500);
+		}
+	}
+}

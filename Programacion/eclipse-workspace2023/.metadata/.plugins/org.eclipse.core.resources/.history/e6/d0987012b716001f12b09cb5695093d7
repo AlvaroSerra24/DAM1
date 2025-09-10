@@ -1,0 +1,57 @@
+package examen;
+
+public class Turista extends Persona{
+	private String nacionalidad;
+	private String idioma;
+	private Visita v;
+	
+	public Turista(String id, String nombre, String apellidos, String nacionalidad, String idioma, Visita v) {
+		super(id, nombre, apellidos);
+		this.nacionalidad = nacionalidad;
+		this.idioma = idioma;
+		this.v = v;
+	}
+	
+	public Turista(String id, String nombre, String apellidos, String nacionalidad, String idioma) {
+		super(id, nombre, apellidos);
+		this.nacionalidad = nacionalidad;
+		this.idioma = idioma;
+		this.v = new Visita();
+	}
+	
+	public Turista() {
+		super();
+		this.nacionalidad = "";
+		this.idioma = "";
+		this.v = new Visita();
+	}
+
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
+
+	public Visita getV() {
+		return v;
+	}
+
+	public void setV(Visita v) {
+		this.v = v;
+	}
+
+	@Override
+	public String toString() {
+		return "Turista [nacionalidad=" + nacionalidad + ", idioma=" + idioma + ", v=" + v + "]";
+	}
+}

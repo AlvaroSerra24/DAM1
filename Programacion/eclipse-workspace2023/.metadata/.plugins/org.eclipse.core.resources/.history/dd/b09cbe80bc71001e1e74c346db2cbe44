@@ -1,0 +1,40 @@
+package Ejemplos;
+
+import java.util.Scanner;
+
+public class LlamadasMetodos {
+	
+	public static void main(String[] args) {
+		
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Dame el exponente");
+		int n=sc.nextInt();
+		System.out.println("Dame la base");
+		int x=sc.nextInt();
+		System.out.println(potencia(n,x));
+		
+	}
+
+	private static int potencia(int n, int x) {
+		if(n==0)
+			return 1;
+		else
+			return x*potencia(n-1,x);
+	}
+
+//	//Declaración del método
+//	private static void metodo1() {
+//		metodo2();
+//		System.out.println("Hola! soy el método 1");
+//	}
+//
+//	private static void metodo2() {
+//		metodo3();
+//		System.out.println("Hola! soy el método 2");
+//	}
+//
+//	private static void metodo3() {
+//		System.out.println("Hola! soy el método 3");
+//	}
+	
+}

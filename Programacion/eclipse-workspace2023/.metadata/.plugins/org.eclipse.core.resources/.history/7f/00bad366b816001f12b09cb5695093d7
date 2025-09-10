@@ -1,0 +1,85 @@
+package examen;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+
+public class Turista extends Persona{
+	private String nacionalidad;
+	private String idioma;
+	private Visita visita;
+	
+	public Turista(String id, String nombre, String apellidos, String nacionalidad, String idioma, Visita v) {
+		super(id, nombre, apellidos);
+		this.nacionalidad = nacionalidad;
+		this.idioma = idioma;
+		this.visita = v;
+	}
+	
+	public Turista(String id, String nombre, String apellidos, String nacionalidad, String idioma) {
+		super(id, nombre, apellidos);
+		this.nacionalidad = nacionalidad;
+		this.idioma = idioma;
+		this.visita = new Visita();
+	}
+	
+	public Turista() {
+		super();
+		this.nacionalidad = "";
+		this.idioma = "";
+		this.visita = new Visita();
+	}
+
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
+
+	public Visita getV() {
+		return visita;
+	}
+
+	public void setV(Visita v) {
+		this.visita = v;
+	}
+	
+	@Override
+	public String toString() {
+		return "Turista [nacionalidad=" + nacionalidad + ", idioma=" + idioma + ", visita=" + visita + ", id=" + id
+				+ ", nombre=" + nombre + ", apellidos=" + apellidos + "]";
+	}
+
+	public void cargarVisita(String filename) {
+		File f= new File(filename);
+		String cadena = "";
+		String[] linea;
+		try {
+			Scanner entrada= new Scanner(f);
+			cadena=entrada.nextLine();
+			while(entrada.hasNext()) {
+				cadena = entrada.nextLine();
+				linea = cadena.split(";");
+				if(this.id.equals(linea[1])) {
+					this.visita = new Visita(linea[2],Integer.parseInt(linea[3]),linea[4],Double.parseDouble(linea[5]));
+				}else if(this.id.equals(null)) {
+					System.out.println("Este turista no tiene asignado un código");
+				}
+			}
+			entrada.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+}

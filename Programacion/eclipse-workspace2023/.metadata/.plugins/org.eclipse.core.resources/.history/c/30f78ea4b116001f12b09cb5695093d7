@@ -1,0 +1,12 @@
+package examen;
+
+import java.util.ArrayList;
+
+public class Guia {
+	private String id;
+	private String nombre;
+	private String apellidos;
+	private String titulacion;
+	private int añosExperiencia;
+	private ArrayList<Turista> turistas;
+}

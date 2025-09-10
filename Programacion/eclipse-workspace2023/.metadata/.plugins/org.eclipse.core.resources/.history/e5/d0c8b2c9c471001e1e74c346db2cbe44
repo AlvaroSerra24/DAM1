@@ -1,0 +1,71 @@
+package Ejemplos;
+
+import java.util.Scanner;
+
+public class LlamadasMetodos {
+	
+	public static void main(String[] args) {
+		
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Dame el exponente");
+		int n=sc.nextInt();
+		System.out.println("Dame la base");
+		int x=sc.nextInt();
+		System.out.println(potencia(n,x));
+		System.out.println(potencia2(n,x));
+		System.out.println(factorial2(x));
+		System.out.println(factorial(x));
+		sc.close();
+	}
+
+	private static int factorial2(int x) {
+		int fact=1;
+		for(int i=x; i==1; i--) {
+			fact=fact*i;
+			System.out.print(i);
+			if(i!=1)
+				System.out.print(".");
+		}
+		System.out.print("=");
+		return fact;
+	}
+	
+	public static int factorial(int x) {
+		if(x==0)
+			return 1;
+		else
+			return x*factorial(x-1);
+	}
+
+	private static int potencia(int n, int x) {
+		if(n==0)
+			return 1;
+		else
+			return x*potencia(n-1,x);
+	}
+	
+	public static int potencia2(int n, int x) {
+		int p=1;
+		for (int i=0; i<=n;i++)
+			p=p*x;
+		return p;
+	}
+	
+	
+
+//	//Declaración del método
+//	private static void metodo1() {
+//		metodo2();
+//		System.out.println("Hola! soy el método 1");
+//	}
+//
+//	private static void metodo2() {
+//		metodo3();
+//		System.out.println("Hola! soy el método 2");
+//	}
+//
+//	private static void metodo3() {
+//		System.out.println("Hola! soy el método 3");
+//	}
+	
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;BD.java&apos; to &apos;ÁlvaroSerradillaOtero/src/examen&apos;&#x0D;&#x0A;- Original project: &apos;UT11&apos;&#x0D;&#x0A;- Destination element: &apos;ÁlvaroSerradillaOtero/src/examen&apos;&#x0D;&#x0A;- Original element: &apos;singleton.BD.java&apos;" description="Move compilation unit" destination="=ÁlvaroSerradillaOtero/src&lt;examen" element1="/src&lt;singleton{BD.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="false" stamp="1716212988772" units="1" version="1.0"/>
+</session>

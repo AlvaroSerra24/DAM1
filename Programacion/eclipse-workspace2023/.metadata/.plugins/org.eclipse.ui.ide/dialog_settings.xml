@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="NewWizardAction">
+		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.jdt.ui.wizards.JavaProjectWizard"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.jdt.ui.java"/>
+		</list>
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="429"/>
+		<item key="DIALOG_Y_ORIGIN" value="8"/>
+		<item key="DIALOG_WIDTH" value="525"/>
+		<item key="DIALOG_HEIGHT" value="580"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+	</section>
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
+		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\Vespertino\Documents\DAM1\Entorno de Desarrollo\UT4\Ejemplos - PARTE I - Documentacion\Ejemplo1. Documentacion"/>
+			<item value="C:\Users\Vespertino\Documents\DAM1\Entorno de Desarrollo\UT3\Recuperacion\recursosParaAlumnos\ExamenRecuperacionUt3Ejercicio3"/>
+			<item value="C:\Users\Vespertino\Documents\DAM1\Entorno de Desarrollo\UT3\Recuperacion\recursosParaAlumnos\ExamenRecuperacionUt3_ejercicio5"/>
+			<item value="C:\Users\Vespertino\Downloads\ExamenUt3_ejercicio5\bin"/>
+			<item value="C:\Users\Vespertino\Downloads\ExamenUt3_ejercicio5"/>
+			<item value="C:\Users\Vespertino\Documents\DAM1\Entorno de Desarrollo\Examen\recursosParaAlumnos\ExamenUt3_ejercicio5"/>
+			<item value="C:\Users\Vespertino\Documents\DAM1\Entorno de Desarrollo\Examen\recursosParaAlumnos\ExamenUt3_ejercicio3"/>
+			<item value="C:\Users\Vespertino\Documents\DAM1\Entorno de Desarrollo\UT3\Ejemplos - PARTE I"/>
+			<item value="C:\Users\Vespertino\Documents\DAM1\Entorno de Desarrollo\UT3\Ejemplos - PARTE I\Ejemplo2. Prueba de bucles - CAJA BLANCA\BuclesAnidados"/>
+			<item value="C:\Users\Vespertino\eclipse-workspace2023\UT7"/>
+			<item value="C:\Users\Vespertino\eclipse-workspace2023\UT7\src"/>
+			<item value="C:\Users\Vespertino\Documents\DAM1\Entorno de Desarrollo\UT3\Ejemplos - PARTE I\Ejemplo 1. Pruebas de cubrimiento - CAJA BLANCA\Solucion\ItsFreaky"/>
+			<item value="C:\Users\alvar\eclipse-workspace2023\UT2"/>
+			<item value="C:\Users\alvar\eclipse-workspace2023\UT1"/>
+			<item value="C:\Users\Vespertino\eclipse-workspace2023\UT2"/>
+			<item value="C:\Users\Vespertino\eclipse-workspace2023\UT1"/>
+		</list>
+	</section>
+	<section name="ExternalProjectImportWizard">
+		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\Vespertino\Downloads\ExamenUt3_ejercicio5"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
+	<section name="org.eclipse.text.quicksearch.internal.ui.QuickSearchDialog.DIALOG_SETTINGS">
+		<item key="LAST_QUERY" value=""/>
+		<item key="PATH_FILTER" value=""/>
+		<item key="CASE_SENSITIVE" value="true"/>
+		<item key="KEEP_OPEN" value="false"/>
+		<list key="COLUMN_WIDTHS">
+			<item value="40"/>
+			<item value="400"/>
+			<item value="118"/>
+		</list>
+		<list key="SASH_WEIGHTS">
+			<item value="714"/>
+			<item value="285"/>
+		</list>
+		<section name="DialogBoundsSettings">
+			<item key="DIALOG_HEIGHT" value="500"/>
+			<item key="DIALOG_WIDTH" value="600"/>
+			<item key="DIALOG_X_ORIGIN" value="388"/>
+			<item key="DIALOG_Y_ORIGIN" value="39"/>
+			<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+		</section>
+	</section>
+</section>

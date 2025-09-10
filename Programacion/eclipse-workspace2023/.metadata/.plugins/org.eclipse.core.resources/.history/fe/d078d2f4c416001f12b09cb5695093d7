@@ -1,0 +1,86 @@
+package examen;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class App implements GestionErrores{
+	private ArrayList<Guia> guias;
+	
+	public App(ArrayList<Guia> guias) {
+		this.guias = guias;
+	}
+
+	public App() {
+		this.guias = new ArrayList<Guia>();
+	}
+
+	public ArrayList<Guia> getGuias() {
+		return guias;
+	}
+
+
+	public void setGuias(ArrayList<Guia> guias) {
+		this.guias = guias;
+	}
+
+	public void cargarGuias(String filename) {
+		File f= new File(filename);
+		String cadena = "";
+		String[] linea;
+		int cont = 0;
+		try {
+			Scanner entrada= new Scanner(f);
+			cadena=entrada.nextLine();
+			while(entrada.hasNext()) {
+				cadena = entrada.nextLine();
+				linea = cadena.split(";");
+					if(cont<3) {
+						this.guias.add(new Guia(linea[0],linea[2],linea[3],linea[4],Integer.parseInt(linea[5])));
+					}
+					cont++;
+			}
+			entrada.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		BDExamen.getInstance().cargarParametrosConexionJson("config.json");
+		App app=new App();
+		//app.limpiarTotalGuia();
+		app.cargarGuias("personas.csv");
+		app.noParametros();
+		for(Guia G: app.guias) {
+			G.cargarTuristas("personas.csv");
+			for(Turista t: G.getTuristas()) {
+				t.cargarVisita("visitasHoy.txt");
+			}
+			System.out.println(G.getTuristas());
+			G.imprimirEntradas();
+		}
+	}
+
+	@Override
+	public boolean limpiarTotalGuia() {
+		BDExamen.getInstance().cargarParametrosConexionJson("config.json");
+		ResultSet rset=BDExamen.getInstance().consultaBD("delete from TOTALGUIA");
+		System.out.println("Se ha eliminado los datos de la tabla totalguia");
+		BDExamen.getInstance().cerrarConsulta();
+		return false;
+	}
+	
+	public void noParametros() {
+		int numT = 0;
+		for(Guia G: this.guias) {
+			for(Turista t: G.getTuristas()) {
+				numT++;
+			}
+			System.out.println(G.nombre+" "+G.apellidos+" tiene hoy "+numT+" visitas");
+		}
+	}
+}
